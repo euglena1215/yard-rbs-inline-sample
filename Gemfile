@@ -32,3 +32,5 @@ end
 group :i18n do
   gem 'gettext'
 end
+
+gem 'activesupport'
