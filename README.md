@@ -1,6 +1,6 @@
 > [!NOTE]
-> Ruby の型アノテーションを YARD から rbs-inline に移行する取り組みとして、YARD を rbs-inline に変換したサンプルのプロジェクトです。
-> 業務のアプリケーションを公開するわけにはいかないので、YARD のアノテーションが多いプロジェクトとして YARD gem を選びました。
+> Ruby の型アノテーションを YARD から rbs-inline に移行する取り組みとして、YARD を rbs-inline に変換したサンプルのプロジェクトです。</br>
+> 業務のアプリケーションを公開するわけにはいかないので、YARD のアノテーションが多いプロジェクトとして YARD gem を選びました。</br>
 > 実行結果は[こちら](https://github.com/euglena1215/yard-rbs-inline-sample/pull/3)
 
 ---
