@@ -3,8 +3,13 @@
 module YardToRbsInline
   # YARD コメントをパースして rbs-inline 形式のコメントに変換するクラス
   class CommentParser
+    class UnsupportedError < StandardError; end
+
     # @rbs skip
-    Argument = Data.define(:name, :type, :description) do
+    Data = Struct.new(*%i[name type description])
+
+    # @rbs skip
+    Argument = ::Data.define(:name, :type, :description) do
       def to_s
         if description
           "# @rbs #{name}: #{rbs_type} -- #{description}"
@@ -14,7 +19,7 @@ module YardToRbsInline
       end
 
       def rbs_type
-        raise 'unsupported type' if type.include?('(') || type.include?(')')
+        raise UnsupportedError if type.include?('(') || type.include?(')')
 
         # TODO: 他にもサポートしきれていないものをサポートする
         type.gsub(', ', ' | ').tr('<', '[').tr('>', ']').gsub('Boolean', 'bool').gsub('NilClass', 'nil')
@@ -23,13 +28,13 @@ module YardToRbsInline
       end
     end
     # @rbs skip
-    Return = Data.define(:type, :description) do
+    Return = ::Data.define(:type, :description) do
       def to_s
         description ? "# @rbs return: #{rbs_type} -- #{description}" : "# @rbs return: #{rbs_type}"
       end
 
       def rbs_type
-        raise 'unsupported type' if type.include?('(') || type.include?(')')
+        raise UnsupportedError if type.include?('(') || type.include?(')')
 
         # TODO: 他にもサポートしきれていないものをサポートする
         type.gsub(', ', ' | ').tr('<', '[').tr('>', ']').gsub('Boolean', 'bool').gsub('NilClass', 'nil')
@@ -37,12 +42,6 @@ module YardToRbsInline
             .then { |t| t == 'Array' ? 'Array[untyped]' : t }
       end
     end
-    # @rbs skip
-    See = Data.define(:description)
-    # @rbs skip
-    Raise = Data.define(:type, :description)
-    # @rbs skip
-    Option = Data.define(:name, :type, :opt_name, :description)
 
     #: () -> void
     def initialize
@@ -88,6 +87,8 @@ module YardToRbsInline
       return @original_comments if @other_comments.any? { |c| c.include?('@') }
 
       [@other_comments.map(&:to_s), @arguments.map(&:to_s), @return.to_s].flatten.reject(&:empty?)
+    rescue UnsupportedError
+      @original_comments
     end
     # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
@@ -98,9 +99,6 @@ module YardToRbsInline
       @def_node = nil
       @arguments = []
       @return = nil
-      @see = []
-      @raise = []
-      @options = []
       @other_comments = []
     end
   end
