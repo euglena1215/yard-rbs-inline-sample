@@ -13,7 +13,7 @@ module YARD
 
       # Creates a new statement list
       #
-      # @param [TokenList, String] content the tokens to create the list from
+      # @rbs content: TokenList | String -- the tokens to create the list from
       def initialize(content)
         @shebang_line = nil
         @encoding_line = nil
@@ -41,7 +41,7 @@ module YARD
 
       # Returns the next statement in the token stream
       #
-      # @return [Statement] the next statement
+      # @rbs return: Statement -- the next statement
       def next_statement
         @state = :first_statement
         @statement_stack = []
@@ -126,7 +126,7 @@ module YARD
 
       # Processes a single token
       #
-      # @param [RubyToken::Token] tk the token to process
+      # @rbs tk: RubyToken::Token -- the token to process
       def process_token(tk)
         # p tk.class, tk.text, @state, @level, @current_block, "<br/>"
         case @state
@@ -190,7 +190,7 @@ module YARD
 
       # Processes a token in a block
       #
-      # @param [RubyToken::Token] tk the token to process
+      # @rbs tk: RubyToken::Token -- the token to process
       def process_block_token(tk)
         if balances?(tk)
           @statement << tk
@@ -208,8 +208,8 @@ module YARD
 
       # Processes a comment token that comes before a statement
       #
-      # @param [RubyToken::Token] tk the token to process
-      # @return [Boolean] whether or not +tk+ was processed as an initial comment
+      # @rbs tk: RubyToken::Token -- the token to process
+      # @rbs return: bool -- whether or not +tk+ was processed as an initial comment
       def process_initial_comment(tk)
         if @statement.empty? && (@comments_last_line || 0) < tk.line_no - 2
           @comments = nil
@@ -264,7 +264,7 @@ module YARD
       # that is, a block opener such as +begin+ or +do+
       # that isn't followed by an expression
       #
-      # @param [RubyToken::Token] tk the token to process
+      # @rbs tk: RubyToken::Token -- the token to process
       def process_simple_block_opener(tk)
         return unless [TkLBRACE, TkDO, TkBEGIN, TkELSE].include?(tk.class) &&
                       # Make sure hashes are parsed as hashes, not as blocks
@@ -289,7 +289,7 @@ module YARD
       # that is, a block opener such as +while+ or +for+
       # that is followed by an expression
       #
-      # @param [RubyToken::Token] tk the token to process
+      # @rbs tk: RubyToken::Token -- the token to process
       def process_complex_block_opener(tk)
         return unless OPEN_BLOCK_TOKENS.include?(tk.class)
 
@@ -301,7 +301,7 @@ module YARD
 
       # Processes a token that closes a statement
       #
-      # @param [RubyToken::Token] tk the token to process
+      # @rbs tk: RubyToken::Token -- the token to process
       def process_statement_end(tk)
         # Whitespace means that we keep the same value of @new_statement as last token
         return if tk.class == TkSPACE
@@ -356,9 +356,9 @@ module YARD
 
       # Handles the balancing of parentheses and blocks
       #
-      # @param [RubyToken::Token] tk the token to process
-      # @return [Boolean] whether or not the current statement's parentheses and blocks
       #   are balanced after +tk+
+      # @rbs tk: RubyToken::Token -- the token to process
+      # @rbs return: bool -- whether or not the current statement's parentheses and blocks
       def balances?(tk)
         unless [TkALIAS, TkDEF].include?(@last_ns_tk.class) || @before_last_ns_tk.class == TkALIAS
           if [TkLPAREN, TkLBRACK, TkLBRACE, TkDO, TkBEGIN].include?(tk.class)
@@ -376,7 +376,7 @@ module YARD
       # Adds a token to the current statement,
       # unless it's a newline, semicolon, or comment
       #
-      # @param [RubyToken::Token] tk the token to process
+      # @rbs tk: RubyToken::Token -- the token to process
       def push_token(tk)
         @first_line = tk.line_no if @statement.empty?
         @statement << tk unless @level == 0 && [TkCOMMENT].include?(tk.class)
@@ -384,7 +384,7 @@ module YARD
 
       # Returns the next token in the stream that's not a space
       #
-      # @return [RubyToken::Token] the next non-space token
+      # @rbs return: RubyToken::Token -- the next non-space token
       def peek_no_space
         return @tokens.first unless @tokens.first.class == TkSPACE
         @tokens[1]

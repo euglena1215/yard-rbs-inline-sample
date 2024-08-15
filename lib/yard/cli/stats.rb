@@ -14,7 +14,7 @@ module YARD
       # @return [Boolean] whether to parse and load registry
       attr_accessor :parse
 
-      # @param [Boolean] parse whether to parse and load registry (see {#parse})
+      # @rbs parse: bool -- whether to parse and load registry (see {#parse})
       def initialize(parse = true)
         super()
         @parse = parse
@@ -29,8 +29,8 @@ module YARD
       # Runs the commandline utility, parsing arguments and generating
       # output if set.
       #
-      # @param [Array<String>] args the list of arguments
-      # @return [void]
+      # @rbs args: Array[String] -- the list of arguments
+      # @rbs return: void
       def run(*args)
         parse_arguments(*args)
 
@@ -102,9 +102,9 @@ module YARD
         end
       end
 
-      # @return [Array<CodeObjects::Base>] all the parsed objects in the registry,
       #   removing any objects that are not visible (private, protected) depending
       #   on the arguments passed to the command.
+      # @rbs return: Array[CodeObjects::Base] -- all the parsed objects in the registry,
       def all_objects
         @all_objects ||= run_verifier Registry.all
       end
@@ -153,12 +153,12 @@ module YARD
       # Prints a statistic to standard out. This method is optimized for
       # getting Integer values, though it allows any data to be printed.
       #
-      # @param [String] name the statistic name
-      # @param [Integer, String] data the numeric (or any) data representing
       #   the statistic. If +data+ is an Integer, it should represent the
       #   total objects of a type.
-      # @param [Integer, nil] undoc number of undocumented objects for the type
-      # @return [void]
+      # @rbs name: String -- the statistic name
+      # @rbs data: Integer | String -- the numeric (or any) data representing
+      # @rbs undoc: Integer | nil -- number of undocumented objects for the type
+      # @rbs return: void
       def output(name, data, undoc = nil)
         @total += data if data.is_a?(Integer) && undoc
         @undocumented += undoc if undoc.is_a?(Integer)
@@ -181,7 +181,7 @@ module YARD
       end
 
       # Parses commandline options.
-      # @param [Array<String>] args each tokenized argument
+      # @rbs args: Array[String] -- each tokenized argument
       def optparse(*args)
         opts = OptionParser.new
         opts.banner = "Usage: yard stats [options] [source_files]"

@@ -51,7 +51,7 @@ module YARD
 
       # Clears the map of separators.
       #
-      # @return [void]
+      # @rbs return: void
       def clear_separators
         NamespaceMapper.invalidate
         NamespaceMapper.map = {}
@@ -76,24 +76,24 @@ module YARD
 
       # @!group Separator and Type Lookup Helpers
 
-      # @return [Array<String>] all of the registered separators
+      # @rbs return: Array[String] -- all of the registered separators
       def separators
         NamespaceMapper.map.keys
       end
 
-      # @return [Regexp] the regexp match of all separators
+      # @rbs return: Regexp -- the regexp match of all separators
       def separators_match
         NamespaceMapper.map_match
       end
 
-      # @param sep [String] the separator to return types for
-      # @return [Array<Symbol>] a list of types registered to a separator
+      # @rbs sep: String -- the separator to return types for
+      # @rbs return: Array[Symbol] -- a list of types registered to a separator
       def types_for_separator(sep)
         NamespaceMapper.map[sep] || []
       end
 
-      # @param type [String] the type to return separators for
-      # @return [Array<Symbol>] a list of separators registered to a type
+      # @rbs type: String -- the type to return separators for
+      # @rbs return: Array[Symbol] -- a list of separators registered to a type
       def separators_for_type(type)
         NamespaceMapper.rev_map[type] || []
       end
@@ -110,24 +110,24 @@ module YARD
 
         # @!visibility private
 
-        # @return [Hash] a mapping of types to separators
+        # @rbs return: Hash[untyped, untyped] -- a mapping of types to separators
         def map
           @map ||= {}
         end
 
-        # @return [Hash] a reverse mapping of separators to types
+        # @rbs return: Hash[untyped, untyped] -- a reverse mapping of separators to types
         def rev_map
           @rev_map ||= {}
         end
 
         # Invalidates all separators
-        # @return [void]
+        # @rbs return: void
         def invalidate
           @map_match = nil
           (@invalidation_callbacks || []).each(&:call)
         end
 
-        # @return [Regexp] the full list of separators as a regexp match
+        # @rbs return: Regexp -- the full list of separators as a regexp match
         def map_match
           @map_match ||= map.keys.map {|k| Regexp.quote k }.join('|')
         end

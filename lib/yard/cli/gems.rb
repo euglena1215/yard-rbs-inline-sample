@@ -13,8 +13,8 @@ module YARD
       # Runs the commandline utility, parsing arguments and generating
       # YARD indexes for gems.
       #
-      # @param [Array<String>] args the list of arguments
-      # @return [void]
+      # @rbs args: Array[String] -- the list of arguments
+      # @rbs return: void
       def run(*args)
         require 'rubygems'
         optparse(*args)

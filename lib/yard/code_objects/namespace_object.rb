@@ -168,7 +168,7 @@ module YARD::CodeObjects
     end
 
     # Returns constants included from any mixins
-    # @return [Array<ConstantObject>] a list of constant objects
+    # @rbs return: Array[ConstantObject] -- a list of constant objects
     def included_constants
       instance_mixins.inject([]) do |list, mixin|
         if mixin.respond_to? :constants
@@ -182,15 +182,15 @@ module YARD::CodeObjects
     end
 
     # Returns class variables defined in this namespace.
-    # @return [Array<ClassVariableObject>] a list of class variable objects
+    # @rbs return: Array[ClassVariableObject] -- a list of class variable objects
     def cvars
       children.select {|o| o.is_a? ClassVariableObject }
     end
 
     # Returns for specific scopes. If no scopes are provided, returns all mixins.
-    # @param [Array<Symbol>] scopes a list of scopes (:class, :instance) to
     #   return mixins for. If this is empty, all scopes will be returned.
-    # @return [Array<ModuleObject>] a list of mixins
+    # @rbs scopes: Array[Symbol] -- a list of scopes (:class, :instance) to
+    # @rbs return: Array[ModuleObject] -- a list of mixins
     def mixins(*scopes)
       return class_mixins if scopes == [:class]
       return instance_mixins if scopes == [:instance]

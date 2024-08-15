@@ -9,16 +9,16 @@ class Insertion
   # inserted. To finalize the insertion, call {#before} or
   # {#after} on the object.
   #
-  # @param [Array] list the list to perform the insertion on
-  # @param [Object] value the value to insert
+  # @rbs list: Array[untyped] -- the list to perform the insertion on
+  # @rbs value: Object -- the value to insert
   def initialize(list, value)
     @list = list
     @values = (Array === value ? value : [value])
   end
 
   # Inserts the value before +val+
-  # @param [Object] val the object the value will be inserted before
-  # @param [Boolean] recursive look inside sublists
+  # @rbs val: Object -- the object the value will be inserted before
+  # @rbs recursive: bool -- look inside sublists
   def before(val, recursive = false) insertion(val, 0, recursive) end
 
   # Inserts the value after +val+.
@@ -41,11 +41,11 @@ class Insertion
 
   # This method performs the actual insertion
   #
-  # @param [Object] val the value to insert
-  # @param [Fixnum] rel the relative index (0 or 1) of where the object
   #   should be placed
-  # @param [Boolean] recursive look inside sublists
-  # @param [Array] list the list to place objects into
+  # @rbs val: Object -- the value to insert
+  # @rbs rel: Fixnum -- the relative index (0 or 1) of where the object
+  # @rbs recursive: bool -- look inside sublists
+  # @rbs list: Array[untyped] -- the list to place objects into
   def insertion(val, rel, recursive = false, list = @list)
     if recursive
       list.each do |item|

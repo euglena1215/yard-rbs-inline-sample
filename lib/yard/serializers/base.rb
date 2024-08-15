@@ -24,7 +24,7 @@ module YARD
 
       # Creates a new serializer with options
       #
-      # @param [Hash] opts the options to assign to {#options}
+      # @rbs opts: Hash[untyped, untyped] -- the options to assign to {#options}
       def initialize(opts = {})
         @options = SymbolHash.new(false).update(opts)
       end

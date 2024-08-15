@@ -30,7 +30,7 @@ module YARD
   # @deprecated Use {Config.load_plugins}
   def self.load_plugins; YARD::Config.load_plugins end
 
-  # @return [Boolean] whether YARD is being run inside of Windows
+  # @rbs return: bool -- whether YARD is being run inside of Windows
   def self.windows?
     return @windows if defined? @windows
     require 'rbconfig'
@@ -40,19 +40,19 @@ module YARD
     @windows ||= false
   end
 
-  # @return [Boolean] whether YARD is being run in Ruby 1.8 mode
+  # @rbs return: bool -- whether YARD is being run in Ruby 1.8 mode
   def self.ruby18?; !ruby19? end
 
-  # @return [Boolean] whether YARD is being run in Ruby 1.9 mode
+  # @rbs return: bool -- whether YARD is being run in Ruby 1.9 mode
   def self.ruby19?; @ruby19 ||= (RUBY_VERSION >= "1.9.1") end
 
-  # @return [Boolean] whether YARD is being run in Ruby 2.0
+  # @rbs return: bool -- whether YARD is being run in Ruby 2.0
   def self.ruby2?; @ruby2 ||= (RUBY_VERSION >= '2.0.0') end
 
-  # @return [Boolean] whether YARD is being run in Ruby 3.0
+  # @rbs return: bool -- whether YARD is being run in Ruby 3.0
   def self.ruby3?; @ruby3 ||= (RUBY_VERSION >= '3.0.0') end
 
-  # @return [Boolean] whether YARD is being run in Ruby 3.1
+  # @rbs return: bool -- whether YARD is being run in Ruby 3.1
   def self.ruby31?; @ruby31 ||= (RUBY_VERSION >= '3.1.0') end
 end
 

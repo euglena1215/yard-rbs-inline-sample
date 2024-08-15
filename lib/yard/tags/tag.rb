@@ -36,11 +36,11 @@ module YARD
       # Key names are for tags that declare meta data for a specific key or name, such as +param+,
       # +raise+, etc.
       #
-      # @param [#to_s] tag_name        the tag name to create the tag for
-      # @param [String] text           the descriptive text for this tag
-      # @param [Array<String>] types   optional type list of formally declared types
       #                                for the tag
-      # @param [String] name           optional key name which the tag refers to
+      # @rbs tag_name: #to_s --        the tag name to create the tag for
+      # @rbs text: String --           the descriptive text for this tag
+      # @rbs types: Array[String] --   optional type list of formally declared types
+      # @rbs name: String --           optional key name which the tag refers to
       def initialize(tag_name, text, types = nil, name = nil)
         @tag_name = tag_name.to_s
         @text = text
@@ -60,8 +60,7 @@ module YARD
       # Provides a plain English summary of the type specification, or nil
       # if no types are provided or parsable.
       #
-      # @return [String] a plain English description of the associated types
-      # @return [nil] if no types are provided or not parsable
+      # @rbs return: nil -- if no types are provided or not parsable
       def explain_types
         return nil if !types || types.empty?
         TypesExplainer.explain(*types)

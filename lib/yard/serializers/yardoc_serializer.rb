@@ -58,7 +58,7 @@ module YARD
         File.unlink(processing_path) if File.exist?(processing_path)
       end
 
-      # @return [Boolean] whether the database is currently locked for writing
+      # @rbs return: bool -- whether the database is currently locked for writing
       def locked_for_writing?
         File.exist?(processing_path)
       end

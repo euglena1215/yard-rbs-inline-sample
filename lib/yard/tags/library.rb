@@ -138,7 +138,7 @@ module YARD
         # Sorts the labels lexically by their label name, often used when displaying
         # the tags.
         #
-        # @return [Array<Symbol>, String] the sorted labels as an array of the tag name and label
+        # @rbs return: Array[Symbol] | String -- the sorted labels as an array of the tag name and label
         def sorted_labels
           labels.sort_by {|a| a.last.downcase }
         end
@@ -240,7 +240,7 @@ module YARD
         end
       end
 
-      # @return [Directive]
+      # @rbs return: Directive
       def directive_call(tag, parser)
         meth = self.class.factory_method_for_directive(tag.tag_name)
         if meth <= Directive
@@ -261,32 +261,32 @@ module YARD
         self.factory = factory
       end
 
-      # @param [#to_s] tag_name the name of the tag to look for
-      # @return [Boolean] whether a tag by the given name is registered in
       #   the library.
+      # @rbs tag_name: #to_s -- the name of the tag to look for
+      # @rbs return: bool -- whether a tag by the given name is registered in
       def has_tag?(tag_name)
         tag_name && respond_to?(self.class.tag_method_name(tag_name))
       end
 
       # Creates a new {Tag} object with a given tag name and data
-      # @return [Tag] the newly created tag object
+      # @rbs return: Tag -- the newly created tag object
       def tag_create(tag_name, tag_buf)
         send(self.class.tag_method_name(tag_name), tag_buf)
       end
 
-      # @param [#to_s] tag_name the name of the tag to look for
-      # @return [Boolean] whether a directive by the given name is registered in
       #   the library.
+      # @rbs tag_name: #to_s -- the name of the tag to look for
+      # @rbs return: bool -- whether a directive by the given name is registered in
       def has_directive?(tag_name)
         tag_name && respond_to?(self.class.directive_method_name(tag_name))
       end
 
       # Creates a new directive with tag information and a docstring parser
       # object.
-      # @param [String] tag_name the name of the tag
-      # @param [String] tag_buf the tag data
-      # @param [DocstringParser] parser the parser object parsing the docstring
-      # @return [Directive] the newly created directive
+      # @rbs tag_name: String -- the name of the tag
+      # @rbs tag_buf: String -- the tag data
+      # @rbs parser: DocstringParser -- the parser object parsing the docstring
+      # @rbs return: Directive -- the newly created directive
       def directive_create(tag_name, tag_buf, parser)
         meth = self.class.factory_method_for(tag_name)
         tag = send_to_factory(tag_name, meth, tag_buf)

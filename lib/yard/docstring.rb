@@ -66,14 +66,14 @@ module YARD
     # a {DocstringParser}. This method is called by +DocstringParser+
     # when creating the new docstring object.
     #
-    # @param [String] text the textual portion of the docstring
-    # @param [Array<Tags::Tag>] tags the list of tag objects in the docstring
-    # @param [CodeObjects::Base, nil] object the object associated with the
     #   docstring. May be nil.
-    # @param [String] raw_data the complete docstring, including all
     #   original formatting and any unparsed tags/directives.
-    # @param [CodeObjects::Base, nil] ref_object a reference object used for
     #   the base set of documentation / tag information.
+    # @rbs text: String -- the textual portion of the docstring
+    # @rbs tags: Array[Tags::Tag] -- the list of tag objects in the docstring
+    # @rbs object: CodeObjects::Base | nil -- the object associated with the
+    # @rbs raw_data: String -- the complete docstring, including all
+    # @rbs ref_object: CodeObjects::Base | nil -- a reference object used for
     def self.new!(text, tags = [], object = nil, raw_data = nil, ref_object = nil)
       docstring = allocate
       docstring.replace(text, false)
@@ -110,9 +110,9 @@ module YARD
 
     # Adds another {Docstring}, copying over tags.
     #
-    # @param [Docstring, String] other the other docstring (or string) to
     #   add.
-    # @return [Docstring] a new docstring with both docstrings combines
+    # @rbs other: Docstring | String -- the other docstring (or string) to
+    # @rbs return: Docstring -- a new docstring with both docstrings combines
     def +(other)
       case other
       when Docstring
@@ -128,7 +128,7 @@ module YARD
     end
 
     # Replaces the docstring with new raw content. Called by {#all=}.
-    # @param [String] content the raw comments to be parsed
+    # @rbs content: String -- the raw comments to be parsed
     def replace(content, parse = true)
       content = content.join("\n") if content.is_a?(Array)
       @tags = []
@@ -162,14 +162,13 @@ module YARD
 
     # @endgroup
 
-    # @return [Fixnum] the first line of the {#line_range}
-    # @return [nil] if there is no associated {#line_range}
+    # @rbs return: nil -- if there is no associated {#line_range}
     def line
       line_range ? line_range.first : nil
     end
 
     # Gets the first line of a docstring to the period or the first paragraph.
-    # @return [String] The first line or paragraph of the docstring; always ends with a period.
+    # @rbs return: String -- The first line or paragraph of the docstring; always ends with a period.
     def summary
       resolve_reference
       return @summary if defined?(@summary) && @summary
@@ -237,8 +236,8 @@ module YARD
     # tag data based on the {Tags::DefaultFactory} tag factory, use
     # {DocstringParser} instead.
     #
-    # @param [Tags::Tag, Tags::RefTag] tags list of tag objects to add
-    # @return [void]
+    # @rbs tags: Tags::Tag | Tags::RefTag -- list of tag objects to add
+    # @rbs return: void
     def add_tag(*tags)
       tags.each_with_index do |tag, i|
         case tag
@@ -268,8 +267,8 @@ module YARD
 
     # Returns a list of tags specified by +name+ or all tags if +name+ is not specified.
     #
-    # @param [#to_s] name the tag name to return data for, or nil for all tags
-    # @return [Array<Tags::Tag>] the list of tags by the specified tag name
+    # @rbs name: #to_s -- the tag name to return data for, or nil for all tags
+    # @rbs return: Array[Tags::Tag] -- the list of tags by the specified tag name
     def tags(name = nil)
       list = stable_sort_by(@tags + convert_ref_tags, &:tag_name)
       return list unless name
@@ -278,8 +277,8 @@ module YARD
 
     # Returns true if at least one tag by the name +name+ was declared
     #
-    # @param [String] name the tag name to search for
-    # @return [Boolean] whether or not the tag +name+ was declared
+    # @rbs name: String -- the tag name to search for
+    # @rbs return: bool -- whether or not the tag +name+ was declared
     def has_tag?(name)
       tags.any? {|tag| tag.tag_name.to_s == name.to_s }
     end
@@ -304,9 +303,9 @@ module YARD
 
     # Returns true if the docstring has no content that is visible to a template.
     #
-    # @param [Boolean] only_visible_tags whether only {Tags::Library.visible_tags}
     #   should be checked, or if all tags should be considered.
-    # @return [Boolean] whether or not the docstring has content
+    # @rbs only_visible_tags: bool -- whether only {Tags::Library.visible_tags}
+    # @rbs return: bool -- whether or not the docstring has content
     def blank?(only_visible_tags = true)
       if only_visible_tags
         empty? && !tags.any? {|tag| Tags::Library.visible_tags.include?(tag.tag_name.to_sym) }
@@ -324,7 +323,7 @@ module YARD
     # Normally, you don't need to call this method
     # explicitly. Resolving unresolved reference is done implicitly.
     #
-    # @return [void]
+    # @rbs return: void
     def resolve_reference
       loop do
         return if defined?(@unresolved_reference).nil? || @unresolved_reference.nil?
@@ -340,7 +339,7 @@ module YARD
 
     # Maps valid reference tags
     #
-    # @return [Array<Tags::RefTag>] the list of valid reference tags
+    # @rbs return: Array[Tags::RefTag] -- the list of valid reference tags
     def convert_ref_tags
       list = @ref_tags.reject {|t| CodeObjects::Proxy === t.owner }
 
@@ -360,12 +359,12 @@ module YARD
 
     # Parses out comments split by newlines into a new code object
     #
-    # @param [String] comments
     #   the newline delimited array of comments. If the comments
     #   are passed as a String, they will be split by newlines.
     #
-    # @return [String] the non-metadata portion of the comments to
     #   be used as a docstring
+    # @rbs comments: String
+    # @rbs return: String -- the non-metadata portion of the comments to
     def parse_comments(comments)
       parser = self.class.parser
       parser.parse(comments, object)
@@ -377,8 +376,8 @@ module YARD
 
     # A stable sort_by method.
     #
-    # @param list [Enumerable] the list to sort.
-    # @return [Array] a stable sorted list.
+    # @rbs list: Enumerable -- the list to sort.
+    # @rbs return: Array[untyped] -- a stable sorted list.
     def stable_sort_by(list)
       list.each_with_index.sort_by {|tag, i| [yield(tag), i] }.map(&:first)
     end

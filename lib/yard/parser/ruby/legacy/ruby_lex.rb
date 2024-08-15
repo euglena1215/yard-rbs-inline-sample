@@ -32,8 +32,8 @@ module YARD
         NO_TEXT = "??".freeze
 
         # Creates a new Token object
-        # @param [Integer] line_no the line number to initialize the token to
-        # @param [Integer] char_no the char number to initialize the token to
+        # @rbs line_no: Integer -- the line number to initialize the token to
+        # @rbs char_no: Integer -- the char number to initialize the token to
         def initialize(line_no, char_no)
           @line_no = line_no
           @char_no = char_no
@@ -42,8 +42,8 @@ module YARD
 
         # Chainable way to sets the text attribute
         #
-        # @param [String] text the new text
-        # @return [Token] this token object
+        # @rbs text: String -- the new text
+        # @rbs return: Token -- this token object
         def set_text(text)
           @text = text
           self

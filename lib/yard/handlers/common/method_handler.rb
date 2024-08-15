@@ -4,7 +4,7 @@ module YARD::Handlers
   module Common
     # Shared functionality between Ruby and C method handlers.
     module MethodHandler
-      # @param [MethodObject] obj
+      # @rbs obj: MethodObject
       def add_predicate_return_tag(obj)
         if obj.tag(:return) && (obj.tag(:return).types || []).empty?
           obj.tag(:return).types = ['Boolean']

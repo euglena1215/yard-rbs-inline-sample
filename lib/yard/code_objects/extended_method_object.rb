@@ -7,13 +7,13 @@ module YARD::CodeObjects
   class ExtendedMethodObject
     instance_methods.each {|m| undef_method(m) unless m =~ /^__/ || m.to_sym == :object_id }
 
-    # @return [Symbol] always +:class+
+    # @rbs return: Symbol -- always +:class+
     def scope; :class end
 
     # Sets up a delegate for {MethodObject} obj.
     #
-    # @param [MethodObject] obj the instance method to treat as a mixed in
     #   class method on another namespace.
+    # @rbs obj: MethodObject -- the instance method to treat as a mixed in
     def initialize(obj) @del = obj end
 
     # Sends all methods to the {MethodObject} assigned in {#initialize}

@@ -62,8 +62,8 @@ class YARD::Handlers::Ruby::ClassHandler < YARD::Handlers::Ruby::Base
   # Extract the parameters from the Struct.new AST node, returning them as a list
   # of strings
   #
-  # @param [MethodCallNode] superclass the AST node for the Struct.new call
-  # @return [Array<String>] the member names to generate methods for
+  # @rbs superclass: MethodCallNode -- the AST node for the Struct.new call
+  # @rbs return: Array[String] -- the member names to generate methods for
   def extract_parameters(superclass)
     members = superclass.parameters.select {|x| x && x.type == :symbol_literal }
     members.map! {|x| x.source.strip[1..-1] }

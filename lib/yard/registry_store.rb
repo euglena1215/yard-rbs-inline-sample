@@ -27,9 +27,9 @@ module YARD
 
     # Gets a {CodeObjects::Base} from the store
     #
-    # @param [String, Symbol] key the path name of the object to look for.
     #   If it is empty or :root, returns the {#root} object.
-    # @return [CodeObjects::Base, nil] a code object or nil if none is found
+    # @rbs key: String | Symbol -- the path name of the object to look for.
+    # @rbs return: CodeObjects::Base | nil -- a code object or nil if none is found
     def get(key)
       key = :root if key == ''
       key = key.to_sym
@@ -49,9 +49,9 @@ module YARD
     end
 
     # Associates an object with a path
-    # @param [String, Symbol] key the path name (:root or '' for root object)
-    # @param [CodeObjects::Base] value the object to store
-    # @return [CodeObjects::Base] returns +value+
+    # @rbs key: String | Symbol -- the path name (:root or '' for root object)
+    # @rbs value: CodeObjects::Base -- the object to store
+    # @rbs return: CodeObjects::Base -- returns +value+
     def put(key, value)
       if key == ''
         @object_types[:root] = [:root]
@@ -70,8 +70,8 @@ module YARD
     alias []= put
 
     # Deletes an object at a given path
-    # @param [#to_sym] key the key to delete
-    # @return [void]
+    # @rbs key: #to_sym -- the key to delete
+    # @rbs return: void
     def delete(key)
       if @store[key.to_sym]
         @object_types[@store[key.to_sym].type].delete(key.to_s)
@@ -82,17 +82,17 @@ module YARD
     # Gets all path names from the store. Loads the entire database
     # if +reload+ is +true+
     #
-    # @param [Boolean] reload if false, does not load the entire database
     #   before a lookup.
-    # @return [Array<Symbol>] the path names of all the code objects
+    # @rbs reload: bool -- if false, does not load the entire database
+    # @rbs return: Array[Symbol] -- the path names of all the code objects
     def keys(reload = false) load_all if reload; @store.keys end
 
     # Gets all code objects from the store. Loads the entire database
     # if +reload+ is +true+
     #
-    # @param [Boolean] reload if false, does not load the entire database
     #   before a lookup.
-    # @return [Array<CodeObjects::Base>] all the code objects
+    # @rbs reload: bool -- if false, does not load the entire database
+    # @rbs return: Array[CodeObjects::Base] -- all the code objects
     def values(reload = false) load_all if reload; @store.values end
 
     # @param [Symbol] type the type to look for
@@ -113,7 +113,7 @@ module YARD
       paths_for_type(type).map {|t| @store[t.to_sym] }
     end
 
-    # @return [CodeObjects::RootObject] the root object
+    # @rbs return: CodeObjects::RootObject -- the root object
     def root; @store[:root] end
 
     # @param [String] name the locale name.
@@ -123,8 +123,8 @@ module YARD
       @locales[name] ||= load_locale(name)
     end
 
-    # @param [String, nil] file the name of the yardoc db to load
-    # @return [Boolean] whether the database was loaded
+    # @rbs file: String | nil -- the name of the yardoc db to load
+    # @rbs return: bool -- whether the database was loaded
     def load(file = nil)
       initialize
       @file = file
@@ -149,7 +149,7 @@ module YARD
     end
 
     # Loads all cached objects into memory
-    # @return [void]
+    # @rbs return: void
     def load_all
       return unless @file
       return if @loaded_objects >= @available_objects
@@ -170,10 +170,10 @@ module YARD
     end
 
     # Saves the database to disk
-    # @param [Boolean] merge if true, merges the data in memory with the
     #   data on disk, otherwise the data on disk is deleted.
-    # @param [String, nil] file if supplied, the name of the file to save to
-    # @return [Boolean] whether the database was saved
+    # @rbs merge: bool -- if true, merges the data in memory with the
+    # @rbs file: String | nil -- if supplied, the name of the file to save to
+    # @rbs return: bool -- whether the database was saved
     def save(merge = true, file = nil)
       if file && file != @file
         @file = file
@@ -197,24 +197,24 @@ module YARD
     end
 
     # (see Serializers::YardocSerializer#lock_for_writing)
-    # @param file [String] if supplied, the path to the database
+    # @rbs file: String -- if supplied, the path to the database
     def lock_for_writing(file = nil, &block)
       Serializers::YardocSerializer.new(file || @file).lock_for_writing(&block)
     end
 
     # (see Serializers::YardocSerializer#locked_for_writing?)
-    # @param file [String] if supplied, the path to the database
+    # @rbs file: String -- if supplied, the path to the database
     def locked_for_writing?(file = nil)
       Serializers::YardocSerializer.new(file || @file).locked_for_writing?
     end
 
     # Deletes the .yardoc database on disk
     #
-    # @param [Boolean] force if force is not set to true, the file/directory
     #   will only be removed if it ends with .yardoc. This helps with
     #   cases where the directory might have been named incorrectly.
-    # @return [Boolean] true if the .yardoc database was deleted, false
     #   otherwise.
+    # @rbs force: bool -- if force is not set to true, the file/directory
+    # @rbs return: bool -- true if the .yardoc database was deleted, false
     def destroy(force = false)
       if (!force && file =~ /\.yardoc$/) || force
         if File.file?(@file)

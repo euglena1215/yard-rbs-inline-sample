@@ -47,8 +47,8 @@ module YARD
 
       # Translates into +locale+.
       #
-      # @param [Locale] locale the translation target locale.
-      # @return [String] translated text.
+      # @rbs locale: Locale -- the translation target locale.
+      # @rbs return: String -- translated text.
       def translate(locale)
         translated_text = String.new("")
         parse do |part|

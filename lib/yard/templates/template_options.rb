@@ -71,10 +71,9 @@ module YARD
       #   is matched against the full mixin path, otherwise only the module name is used.
       default_attr :embed_mixins, lambda { [] }
 
-      # @param [CodeObjects::Base] mixin accepts any code object, but returns
       #   nil unless the object is a module.
-      # @return [Boolean] whether a mixin matches the embed_mixins list
-      # @return [nil] if the mixin is not a module object
+      # @rbs mixin: CodeObjects::Base -- accepts any code object, but returns
+      # @rbs return: nil -- if the mixin is not a module object
       def embed_mixins_match?(mixin)
         return true if mixin == object # the method is not inherited
         return nil unless mixin.is_a?(CodeObjects::ModuleObject)

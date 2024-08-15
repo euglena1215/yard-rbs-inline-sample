@@ -107,11 +107,11 @@ module YARD
         end
       end
 
-      # @param [String] library The library name.
-      # @param [String, nil] dir The argument provided on the CLI after the
       #   library name. Is supposed to point to either a project directory
       #   with a Yard options file, or a yardoc db.
-      # @return [LibraryVersion, nil]
+      # @rbs library: String -- The library name.
+      # @rbs dir: String | nil -- The argument provided on the CLI after the
+      # @rbs return: LibraryVersion | nil
       def create_library_version_if_yardopts_exist(library, dir)
         if dir
           options_file = File.join(dir, Yardoc::DEFAULT_YARDOPTS_FILE)

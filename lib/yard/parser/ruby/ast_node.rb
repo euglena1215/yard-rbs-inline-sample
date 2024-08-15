@@ -58,34 +58,34 @@ module YARD
         # @return [AstNode, nil] the node's parent or nil if it is a root node.
         attr_accessor :parent
 
-        # @return [Range] the character range in {#full_source} represented
         #   by the node
+        # @rbs return: Range -- the character range in {#full_source} represented
         def source_range
           reset_line_info unless @source_range
           @source_range
         end
 
-        # @return [Range] the line range in {#full_source} represented
         #   by the node
+        # @rbs return: Range -- the line range in {#full_source} represented
         def line_range
           reset_line_info unless @line_range
           @line_range
         end
 
-        # @return [String] the filename the node was parsed from
+        # @rbs return: String -- the filename the node was parsed from
         def file
           return parent.file if parent
           @file
         end
 
-        # @return [String] the full source that the node was parsed from
+        # @rbs return: String -- the full source that the node was parsed from
         def full_source
           return parent.full_source if parent
           return @full_source if @full_source
           return IO.read(@file) if file && File.exist?(file)
         end
 
-        # @return [String] the parse of {#full_source} that the node represents
+        # @rbs return: String -- the parse of {#full_source} that the node represents
         def source
           return parent.full_source[source_range] if parent
           full_source
@@ -106,8 +106,8 @@ module YARD
         # Finds the node subclass that should be instantiated for a specific
         # node type
         #
-        # @param [Symbol] type the node type to find a subclass for
-        # @return [Class] a subclass of AstNode to instantiate the node with.
+        # @rbs type: Symbol -- the node type to find a subclass for
+        # @rbs return: Class -- a subclass of AstNode to instantiate the node with.
         def self.node_class_for(type)
           case type
           when :params
@@ -195,7 +195,7 @@ module YARD
           self
         end
 
-        # @return [Array<AstNode>] the {AstNode} children inside the node
+        # @rbs return: Array[AstNode] -- the {AstNode} children inside the node
         def children
           @children ||= select {|e| AstNode === e }
         end
@@ -216,77 +216,77 @@ module YARD
 
         # @group Node Meta Types
 
-        # @return [Boolean] whether the node is a token
+        # @rbs return: bool -- whether the node is a token
         def token?
           @token
         end
 
-        # @return [Boolean] whether the node is a reference (variable,
         #   constant name)
+        # @rbs return: bool -- whether the node is a reference (variable,
         def ref?
           false
         end
 
-        # @return [Boolean] whether the node is a literal value
+        # @rbs return: bool -- whether the node is a literal value
         def literal?
           false
         end
 
-        # @return [Boolean] whether the node is a keyword
+        # @rbs return: bool -- whether the node is a keyword
         def kw?
           false
         end
 
-        # @return [Boolean] whether the node is a method call
+        # @rbs return: bool -- whether the node is a method call
         def call?
           false
         end
 
-        # @return [Boolean] whether the node is a method definition
+        # @rbs return: bool -- whether the node is a method definition
         def def?
           false
         end
 
-        # @return [Boolean] whether the node is a if/elsif/else condition
+        # @rbs return: bool -- whether the node is a if/elsif/else condition
         def condition?
           false
         end
 
-        # @return [Boolean] whether the node is a loop
+        # @rbs return: bool -- whether the node is a loop
         def loop?
           false
         end
 
-        # @return [Boolean] whether the node has a block
+        # @rbs return: bool -- whether the node has a block
         def block?
           respond_to?(:block) || condition?
         end
 
         # @group Getting Line Information
 
-        # @return [Boolean] whether the node has a {#line_range} set
+        # @rbs return: bool -- whether the node has a {#line_range} set
         def has_line?
           @line_range ? true : false
         end
 
-        # @return [Fixnum] the starting line number of the node
+        # @rbs return: Fixnum -- the starting line number of the node
         def line
           line_range && line_range.first
         end
 
-        # @return [String] the first line of source represented by the node.
+        # @rbs return: String -- the first line of source represented by the node.
         def first_line
           full_source.split(/\r?\n/)[line - 1].strip
         end
 
         # @group Printing a Node
 
-        # @return [String] the first line of source the node represents
+        # @rbs return: String -- the first line of source the node represents
         def show
           "\t#{line}: #{first_line}"
         end
 
-        # @return [nil] pretty prints the node
+        # @rbs return: nil -- pretty prints the node
         def pretty_print(q)
           objs = dup + [:__last__]
           objs.unshift(type) if type && type != :list
@@ -319,7 +319,7 @@ module YARD
           end
         end
 
-        # @return [String] inspects the object
+        # @rbs return: String -- inspects the object
         def inspect
           typeinfo = type && type != :list ? ':' + type.to_s + ', ' : ''
           's(' + typeinfo + map(&:inspect).join(", ") + ')'
@@ -337,7 +337,7 @@ module YARD
         private
 
         # Resets line information
-        # @return [void]
+        # @rbs return: void
         def reset_line_info
           if size == 0
             self.line_range = @fallback_line

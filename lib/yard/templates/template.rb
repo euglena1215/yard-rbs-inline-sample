@@ -32,9 +32,9 @@ module YARD
 
         # Includes the {extra_includes} modules into the template object.
         #
-        # @param [Template] template the template object to mixin the extra includes.
-        # @param [SymbolHash] options the options hash containing all template information
-        # @return [void]
+        # @rbs template: Template -- the template object to mixin the extra includes.
+        # @rbs options: SymbolHash -- the options hash containing all template information
+        # @rbs return: void
         def include_extra(template, options)
           extra_includes.each do |mod|
             mod = mod.call(options) if mod.is_a?(Proc)
@@ -102,10 +102,10 @@ module YARD
         # Searches for the nth file (where n = +index+) identified
         # by basename in the template's path and any mixed in template paths.
         #
-        # @param [String] basename the filename to search for
-        # @param [Fixnum] index the nth existing file to return
-        # @return [String] the full path of the nth file on disk with
         #   filename +basename+ in one of the template paths
+        # @rbs basename: String -- the filename to search for
+        # @rbs index: Fixnum -- the nth existing file to return
+        # @rbs return: String -- the full path of the nth file on disk with
         def find_nth_file(basename, index = 1)
           n = 1
           full_paths.each do |path|
@@ -199,8 +199,8 @@ module YARD
       # specified in the {#options} hash, they are prepended and appended
       # to the path respectively.
       #
-      # @param [Array<String, Symbol>] path the path of the template
-      # @return [Template] the loaded template module
+      # @rbs path: Array[String | Symbol] -- the path of the template
+      # @rbs return: Template -- the loaded template module
       def T(*path) # rubocop:disable Style/MethodName
         path.unshift(options.template) if options.template
         path.push(options.format) if options.format
@@ -274,7 +274,7 @@ module YARD
 
       # Yields all subsections with any extra options
       #
-      # @param [Hash] opts extra options to be applied to subsections
+      # @rbs opts: Hash[untyped, untyped] -- extra options to be applied to subsections
       def yieldall(opts = nil, &block)
         with_section { run(opts, section, &block) }
       end
@@ -324,9 +324,9 @@ module YARD
 
       # Calls the ERB file from the last inherited template with {#section}.erb
       #
-      # @param [Symbol, String] sect if provided, uses a specific section name
-      # @return [String] the rendered ERB file in any of the inherited template
       #   paths.
+      # @rbs sect: Symbol | String -- if provided, uses a specific section name
+      # @rbs return: String -- the rendered ERB file in any of the inherited template
       def superb(sect = section, &block)
         filename = self.class.find_nth_file(erb_file_for(sect), 2)
         return "" unless filename

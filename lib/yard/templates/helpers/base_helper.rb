@@ -24,9 +24,9 @@ module YARD::Templates::Helpers
     # Runs a list of objects against the {Verifier} object passed into the
     # template and returns the subset of verified objects.
     #
-    # @param [Array<CodeObjects::Base>] list a list of code objects
-    # @return [Array<CodeObjects::Base>] a list of code objects that match
     #   the verifier. If no verifier is supplied, all objects are returned.
+    # @rbs list: Array[CodeObjects::Base] -- a list of code objects
+    # @rbs return: Array[CodeObjects::Base] -- a list of code objects that match
     def run_verifier(list)
       options.verifier ? options.verifier.run(list) : list
     end
@@ -116,9 +116,9 @@ module YARD::Templates::Helpers
 
     # Links to an object with an optional title
     #
-    # @param [CodeObjects::Base] obj the object to link to
-    # @param [String] title the title to use for the link
-    # @return [String] the linked object
+    # @rbs obj: CodeObjects::Base -- the object to link to
+    # @rbs title: String -- the title to use for the link
+    # @rbs return: String -- the linked object
     def link_object(obj, title = nil)
       return title if title
 
@@ -134,10 +134,10 @@ module YARD::Templates::Helpers
 
     # Links to a URL
     #
-    # @param [String] url the URL to link to
-    # @param [String] title the optional title to display the link as
-    # @param [Hash] params optional parameters for the link
-    # @return [String] the linked URL
+    # @rbs url: String -- the URL to link to
+    # @rbs title: String -- the optional title to display the link as
+    # @rbs params: Hash[untyped, untyped] -- optional parameters for the link
+    # @rbs return: String -- the linked URL
     def link_url(url, title = nil, params = nil) # rubocop:disable Lint/UnusedMethodArgument
       url
     end
@@ -204,8 +204,8 @@ module YARD::Templates::Helpers
 
     # Indents and formats source code
     #
-    # @param [String] value the input source code
-    # @return [String] formatted source code
+    # @rbs value: String -- the input source code
+    # @rbs return: String -- formatted source code
     def format_source(value)
       sp = value.split("\n").last[/^(\s+)/, 1]
       num = sp ? sp.size : 0

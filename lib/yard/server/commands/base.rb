@@ -176,7 +176,7 @@ module YARD
         # Sets the body and headers for a 404 response. Does not modify the
         # body if already set.
         #
-        # @return [void]
+        # @rbs return: void
         def not_found
           self.status = 404
           return unless body.empty?

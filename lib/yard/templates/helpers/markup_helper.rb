@@ -7,7 +7,7 @@ module YARD
     module MarkupHelper
       class << self
         # Clears the markup provider cache information. Mainly used for testing.
-        # @return [void]
+        # @rbs return: void
         def clear_markup_cache
           self.markup_cache = {}
         end
@@ -153,8 +153,8 @@ module YARD
       # Gets the markup provider class/module constant for a markup type
       # Call {#load_markup_provider} before using this method.
       #
-      # @param [Symbol] type the markup type (:rdoc, :markdown, etc.)
-      # @return [Class] the markup class
+      # @rbs type: Symbol -- the markup type (:rdoc, :markdown, etc.)
+      # @rbs return: Class -- the markup class
       def markup_class(type = options.markup)
         load_markup_provider(type)
         MarkupHelper.markup_cache[type][:class]
@@ -163,8 +163,8 @@ module YARD
       # Gets the markup provider name for a markup type
       # Call {#load_markup_provider} before using this method.
       #
-      # @param [Symbol] type the markup type (:rdoc, :markdown, etc.)
-      # @return [Symbol] the markup provider name (usually the gem name of the library)
+      # @rbs type: Symbol -- the markup type (:rdoc, :markdown, etc.)
+      # @rbs return: Symbol -- the markup provider name (usually the gem name of the library)
       def markup_provider(type = options.markup)
         MarkupHelper.markup_cache[type][:provider]
       end

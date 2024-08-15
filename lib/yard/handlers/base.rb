@@ -155,13 +155,13 @@ module YARD
 
       class << self
         # Clear all registered subclasses. Testing purposes only
-        # @return [void]
+        # @rbs return: void
         def clear_subclasses
           @@subclasses = []
         end
 
         # Returns all registered handler subclasses.
-        # @return [Array<Base>] a list of handlers
+        # @rbs return: Array[Base] -- a list of handlers
         def subclasses
           @@subclasses ||= []
         end
@@ -181,7 +181,6 @@ module YARD
         # the handlers, otherwise the same code will be parsed
         # multiple times and slow YARD down.
         #
-        # @param [Parser::Ruby::Legacy::RubyToken, Symbol, String, Regexp] matches
         #   statements that match the declaration will be
         #   processed by this handler. A {String} match is
         #   equivalent to a +/\Astring/+ regular expression
@@ -189,6 +188,7 @@ module YARD
         #   token matches match only the first token of the
         #   statement.
         #
+        # @rbs matches: Parser::Ruby::Legacy::RubyToken | Symbol | String | Regexp
         def handles(*matches)
           (@handlers ||= []).concat(matches)
         end
@@ -215,13 +215,13 @@ module YARD
         # Declares that the handler should only be called when inside a
         # {CodeObjects::NamespaceObject}, not a method body.
         #
-        # @return [void]
+        # @rbs return: void
         def namespace_only
           @namespace_only = true
         end
 
-        # @return [Boolean] whether the handler should only be processed inside
         #   a namespace.
+        # @rbs return: bool -- whether the handler should only be processed inside
         def namespace_only?
           @namespace_only ||= false
         end
@@ -398,12 +398,12 @@ module YARD
       # source code and {CodeObjects::Base#docstring},
       # but only if they don't exist.
       #
-      # @param [Array<CodeObjects::Base>] objects
       #   the list of objects to post-process.
       #
-      # @return [CodeObjects::Base, Array<CodeObjects::Base>]
       #   returns whatever is passed in, for chainability.
       #
+      # @rbs objects: Array[CodeObjects::Base]
+      # @rbs return: CodeObjects::Base | Array[CodeObjects::Base]
       def register(*objects)
         objects.flatten.each do |object|
           next unless object.is_a?(CodeObjects::Base)

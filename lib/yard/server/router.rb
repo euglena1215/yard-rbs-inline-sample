@@ -41,7 +41,7 @@ module YARD
 
       # Creates a new router for a specific adapter
       #
-      # @param [Adapter] adapter the adapter to route requests to
+      # @rbs adapter: Adapter -- the adapter to route requests to
       def initialize(adapter)
         self.adapter = adapter
       end
@@ -59,16 +59,16 @@ module YARD
 
       # @group Route Prefixes
 
-      # @return [String] the URI prefix for all object documentation requests
+      # @rbs return: String -- the URI prefix for all object documentation requests
       def docs_prefix; 'docs' end
 
-      # @return [String] the URI prefix for all class/method/file list requests
+      # @rbs return: String -- the URI prefix for all class/method/file list requests
       def list_prefix; 'list' end
 
-      # @return [String] the URI prefix for all search requests
+      # @rbs return: String -- the URI prefix for all search requests
       def search_prefix; 'search' end
 
-      # @return [String] the URI prefix for all static assets (templates)
+      # @rbs return: String -- the URI prefix for all static assets (templates)
       def static_prefix; 'static' end
 
       # @group Routing Methods
@@ -100,8 +100,7 @@ module YARD
       # Performs routing algorithm to find which prefix is called, first
       # parsing out library name/version information.
       #
-      # @return [Array(Numeric,Hash,Array<String>)] the Rack-style response
-      # @return [nil] if no route is matched
+      # @rbs return: nil -- if no route is matched
       def route(path = request.path_info)
         path = path.gsub(%r{//+}, '/').gsub(%r{^/|/$}, '')
         return route_index if path.empty? || path == docs_prefix

@@ -73,9 +73,9 @@ module YARD
       # generate locations for a msgid. +relative_base_path+ is
       # prepended to all locations.
       #
-      # @param [String] relative_base_path a relative working
       #   directory path from a directory path that has created .pot
       #   file.
+      # @rbs relative_base_path: String -- a relative working
       def initialize(relative_base_path)
         @relative_base_path = relative_base_path
         @extracted_objects = {}
@@ -85,9 +85,9 @@ module YARD
       # Parses {CodeObjects::Base} objects and stores extracted msgids
       # into {#messages}
       #
-      # @param [Array<CodeObjects::Base>] objects a list of
       #   {CodeObjects::Base} to be parsed.
-      # @return [void]
+      # @rbs objects: Array[CodeObjects::Base] -- a list of
+      # @rbs return: void
       def parse_objects(objects)
         objects.each do |object|
           extract_documents(object)
@@ -97,9 +97,9 @@ module YARD
       # Parses {CodeObjects::ExtraFileObject} objects and stores
       # extracted msgids into {#messages}.
       #
-      # @param [Array<CodeObjects::ExtraFileObject>] files a list
       #   of {CodeObjects::ExtraFileObject} objects to be parsed.
-      # @return [void]
+      # @rbs files: Array[CodeObjects::ExtraFileObject] -- a list
+      # @rbs return: void
       def parse_files(files)
         files.each do |file|
           extract_paragraphs(file)

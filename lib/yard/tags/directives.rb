@@ -50,8 +50,8 @@ module YARD
 
       # @!endgroup
 
-      # @param [Tag] tag the meta-data tag containing all input to the docstring
-      # @param [DocstringParser] parser the docstring parser object
+      # @rbs tag: Tag -- the meta-data tag containing all input to the docstring
+      # @rbs parser: DocstringParser -- the docstring parser object
       def initialize(tag, parser)
         self.tag = tag
         self.parser = parser
@@ -70,7 +70,7 @@ module YARD
 
       # Called after parsing all directives and tags in the docstring. Used
       # to perform any cleanup after all directives perform their main task.
-      # @return [void]
+      # @rbs return: void
       def after_parse; end
 
       protected :parser

@@ -66,7 +66,7 @@ module YARD
 
       # Starts the Rack server. This method will pass control to the server and
       # block.
-      # @return [void]
+      # @rbs return: void
       def start
         server = RackServer.new(server_options)
         server.instance_variable_set("@app", self)

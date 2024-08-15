@@ -4,8 +4,8 @@
 class SymbolHash < Hash
   # Creates a new SymbolHash object
   #
-  # @param [Boolean] symbolize_value converts any String values into Symbols
   #   if this is set to +true+.
+  # @rbs symbolize_value: bool -- converts any String values into Symbols
   def initialize(symbolize_value = true)
     @symbolize_value = symbolize_value
   end
@@ -36,40 +36,40 @@ class SymbolHash < Hash
   end
 
   # Assigns a value to a symbolized key
-  # @param [#to_sym] key the key
-  # @param [Object] value the value to be assigned. If this is a String and
   #   values are set to be symbolized, it will be converted into a Symbol.
+  # @rbs key: #to_sym -- the key
+  # @rbs value: Object -- the value to be assigned. If this is a String and
   def []=(key, value)
     super(key.to_sym, value.instance_of?(String) && @symbolize_value ? value.to_sym : value)
   end
 
   # Accessed a symbolized key
-  # @param [#to_sym] key the key to access
-  # @return [Object] the value associated with the key
+  # @rbs key: #to_sym -- the key to access
+  # @rbs return: Object -- the value associated with the key
   def [](key) super(key.to_sym) end
 
   # Deleted a key and value associated with it
-  # @param [#to_sym] key the key to delete
-  # @return [void]
+  # @rbs key: #to_sym -- the key to delete
+  # @rbs return: void
   def delete(key) super(key.to_sym) end
 
   # Tests if a symbolized key exists
-  # @param [#to_sym] key the key to test
-  # @return [Boolean] whether the key exists
+  # @rbs key: #to_sym -- the key to test
+  # @rbs return: bool -- whether the key exists
   def key?(key) super(key.to_sym) end
   alias has_key? key?
 
   # Updates the object with the contents of another Hash object.
   # This method modifies the original SymbolHash object
   #
-  # @param [Hash] hash the hash object to copy the values from
-  # @return [SymbolHash] self
+  # @rbs hash: Hash[untyped, untyped] -- the hash object to copy the values from
+  # @rbs return: SymbolHash -- self
   def update(hash) hash.each {|k, v| self[k] = v }; self end
   alias merge! update
 
   # Merges the contents of another hash into a new SymbolHash object
   #
-  # @param [Hash] hash the hash of objects to copy
-  # @return [SymbolHash] a new SymbolHash containing the merged data
+  # @rbs hash: Hash[untyped, untyped] -- the hash of objects to copy
+  # @rbs return: SymbolHash -- a new SymbolHash containing the merged data
   def merge(hash) dup.merge!(hash) end
 end

@@ -31,17 +31,17 @@ module YARD::CodeObjects
 
     # Whether or not the class is a Ruby Exception
     #
-    # @return [Boolean] whether the object represents a Ruby exception
+    # @rbs return: bool -- whether the object represents a Ruby exception
     def is_exception?
       inheritance_tree.reverse.any? {|o| BUILTIN_EXCEPTIONS_HASH.key? o.path }
     end
 
     # Returns the inheritance tree of the object including self.
     #
-    # @param [Boolean] include_mods whether or not to include mixins in the
     #   inheritance tree.
-    # @return [Array<NamespaceObject>] the list of code objects that make up
     #   the inheritance tree.
+    # @rbs include_mods: bool -- whether or not to include mixins in the
+    # @rbs return: Array[NamespaceObject] -- the list of code objects that make up
     def inheritance_tree(include_mods = false)
       list = (include_mods ? mixins(:instance, :class) : [])
       if superclass.is_a?(Proxy) || superclass.respond_to?(:inheritance_tree)
@@ -75,7 +75,7 @@ module YARD::CodeObjects
 
     # Returns only the methods that were inherited.
     #
-    # @return [Array<MethodObject>] the list of inherited method objects
+    # @rbs return: Array[MethodObject] -- the list of inherited method objects
     def inherited_meths(opts = {})
       inheritance_tree[1..-1].inject([]) do |list, superclass|
         if superclass.is_a?(Proxy)
@@ -105,7 +105,7 @@ module YARD::CodeObjects
 
     # Returns only the constants that were inherited.
     #
-    # @return [Array<ConstantObject>] the list of inherited constant objects
+    # @rbs return: Array[ConstantObject] -- the list of inherited constant objects
     def inherited_constants
       inheritance_tree[1..-1].inject([]) do |list, superclass|
         if superclass.is_a?(Proxy)
@@ -120,8 +120,8 @@ module YARD::CodeObjects
 
     # Sets the superclass of the object
     #
-    # @param [Base, Proxy, String, Symbol, nil] object the superclass value
-    # @return [void]
+    # @rbs object: Base | Proxy | String | Symbol | nil -- the superclass value
+    # @rbs return: void
     def superclass=(object)
       case object
       when Base, Proxy, NilClass

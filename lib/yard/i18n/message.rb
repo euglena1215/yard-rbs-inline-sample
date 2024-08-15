@@ -20,7 +20,7 @@ module YARD
 
       # Creates a translate target message for message ID +id+.
       #
-      # @param [String] id the message ID of the translate target message.
+      # @rbs id: String -- the message ID of the translate target message.
       def initialize(id)
         @id = id
         @locations = Set.new
@@ -29,23 +29,23 @@ module YARD
 
       # Adds location information for the message.
       #
-      # @param [String] path the path where the message appears.
-      # @param [Integer] line the line number where the message appears.
-      # @return [void]
+      # @rbs path: String -- the path where the message appears.
+      # @rbs line: Integer -- the line number where the message appears.
+      # @rbs return: void
       def add_location(path, line)
         @locations << [path, line]
       end
 
       # Adds a comment for the message.
       #
-      # @param [String] comment the comment for the message to be added.
-      # @return [void]
+      # @rbs comment: String -- the comment for the message to be added.
+      # @rbs return: void
       def add_comment(comment)
         @comments << comment unless comment.nil?
       end
 
-      # @param [Message] other the +Message+ to be compared.
-      # @return [Boolean] checks whether this message is equal to another.
+      # @rbs other: Message -- the +Message+ to be compared.
+      # @rbs return: bool -- checks whether this message is equal to another.
       def ==(other)
         other.is_a?(self.class) &&
           @id == other.id &&

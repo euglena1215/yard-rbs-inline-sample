@@ -12,9 +12,9 @@ module YARD::CodeObjects
     attr_reader :locale
 
     # Creates a new extra file object.
-    # @param [String] filename the location on disk of the file
-    # @param [String] contents the file contents. If not set, the contents
     #   will be read from disk using the +filename+.
+    # @rbs filename: String -- the location on disk of the file
+    # @rbs contents: String -- the file contents. If not set, the contents
     def initialize(filename, contents = nil)
       self.filename = filename
       self.name = File.basename(filename).gsub(/\.[^.]+$/, '')
@@ -77,7 +77,7 @@ module YARD::CodeObjects
       @contents = parse_contents(@original_contents || File.read(@filename))
     end
 
-    # @param [String] data the file contents
+    # @rbs data: String -- the file contents
     def parse_contents(data)
       retried = false
       cut_index = 0

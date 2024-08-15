@@ -31,10 +31,10 @@ module YARD::Handlers::Ruby::StructHandlerMethods
   # Determines whether to create an attribute method based on the class's
   # tags.
   #
-  # @param [ClassObject] klass the class whose tags we're searching
-  # @param [String] member the name of the struct member we need
-  # @param [Symbol] type (:read) reader method, or writer method?
-  # @return [Boolean] should the attribute be created?
+  # @rbs klass: ClassObject -- the class whose tags we're searching
+  # @rbs member: String -- the name of the struct member we need
+  # @rbs type: Symbol -- (:read) reader method, or writer method?
+  # @rbs return: bool -- should the attribute be created?
   def create_member_method?(klass, member, type = :read)
     return true if (klass.tags(:attr) + klass.tags(:attr_reader) + klass.tags(:attr_writer)).empty?
     return true if member_tag_for_member(klass, member, type)
@@ -45,9 +45,9 @@ module YARD::Handlers::Ruby::StructHandlerMethods
   # Gets the return type for the member in a nicely formatted string. Used
   # to be injected into auto-generated docstrings.
   #
-  # @param [Tags::Tag] member_tag the tag object to check for types
-  # @return [String] the user-declared type of the struct member, or [Object] if
   #   the user did not define a type for this member.
+  # @rbs member_tag: Tags::Tag -- the tag object to check for types
+  # @rbs return: String -- the user-declared type of the struct member, or [Object] if
   def return_type_from_tag(member_tag)
     member_tag && member_tag.types ? member_tag.types : "Object"
   end
@@ -56,9 +56,9 @@ module YARD::Handlers::Ruby::StructHandlerMethods
   # member. This is used so the generated documentation will look just like that
   # of an attribute defined using attr_accessor.
   #
-  # @param [ClassObject] klass the class whose members we're working with
-  # @param [String] member the name of the member we're generating documentation for
-  # @return [String] a docstring to be attached to the getter method for this member
+  # @rbs klass: ClassObject -- the class whose members we're working with
+  # @rbs member: String -- the name of the member we're generating documentation for
+  # @rbs return: String -- a docstring to be attached to the getter method for this member
   def add_reader_tags(klass, new_method, member)
     member_tag = member_tag_for_member(klass, member, :read)
     return_type = return_type_from_tag(member_tag)
@@ -71,9 +71,9 @@ module YARD::Handlers::Ruby::StructHandlerMethods
   # member. This is used so the generated documentation will look just like that
   # of an attribute defined using attr_accessor.
   #
-  # @param [ClassObject] klass the class whose members we're working with
-  # @param [String] member the name of the member we're generating documentation for
-  # @return [String] a docstring to be attached to the setter method for this member
+  # @rbs klass: ClassObject -- the class whose members we're working with
+  # @rbs member: String -- the name of the member we're generating documentation for
+  # @rbs return: String -- a docstring to be attached to the setter method for this member
   def add_writer_tags(klass, new_method, member)
     member_tag = member_tag_for_member(klass, member, :write)
     return_type = return_type_from_tag(member_tag)
@@ -86,9 +86,9 @@ module YARD::Handlers::Ruby::StructHandlerMethods
   # Creates and registers a class object with the given name and superclass name.
   # Returns it for further use.
   #
-  # @param [String] classname the name of the class
-  # @param [String] superclass the name of the superclass
-  # @return [ClassObject] the class object for further processing/method attaching
+  # @rbs classname: String -- the name of the class
+  # @rbs superclass: String -- the name of the superclass
+  # @rbs return: ClassObject -- the class object for further processing/method attaching
   def create_class(classname, superclass)
     register ClassObject.new(namespace, classname) do |o|
       o.superclass = superclass if superclass
@@ -99,8 +99,8 @@ module YARD::Handlers::Ruby::StructHandlerMethods
   # Creates the setter (writer) method and attaches it to the class as an attribute.
   # Also sets up the docstring to prettify the documentation output.
   #
-  # @param [ClassObject] klass the class to attach the method to
-  # @param [String] member the name of the member we're generating a method for
+  # @rbs klass: ClassObject -- the class to attach the method to
+  # @rbs member: String -- the name of the member we're generating a method for
   def create_writer(klass, member)
     # We want to convert these members into attributes just like
     # as if they were declared using attr_accessor.
@@ -116,8 +116,8 @@ module YARD::Handlers::Ruby::StructHandlerMethods
   # Creates the getter (reader) method and attaches it to the class as an attribute.
   # Also sets up the docstring to prettify the documentation output.
   #
-  # @param [ClassObject] klass the class to attach the method to
-  # @param [String] member the name of the member we're generating a method for
+  # @rbs klass: ClassObject -- the class to attach the method to
+  # @rbs member: String -- the name of the member we're generating a method for
   def create_reader(klass, member)
     new_meth = register MethodObject.new(klass, member, :instance) do |o|
       o.signature ||= "def #{member}"
@@ -129,8 +129,8 @@ module YARD::Handlers::Ruby::StructHandlerMethods
 
   # Creates the given member methods and attaches them to the given ClassObject.
   #
-  # @param [ClassObject] klass the class to generate attributes for
-  # @param [Array<String>] members a list of member names
+  # @rbs klass: ClassObject -- the class to generate attributes for
+  # @rbs members: Array[String] -- a list of member names
   def create_attributes(klass, members)
     # For each parameter, add reader and writers
     members.each do |member|

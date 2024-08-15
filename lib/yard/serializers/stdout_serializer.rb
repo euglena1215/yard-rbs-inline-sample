@@ -5,8 +5,8 @@ module YARD
     class StdoutSerializer < Base
       # Creates a serializer to print text to stdout
       #
-      # @param [Fixnum, nil] wrap if wrap is a number, wraps text to +wrap+
       #   columns, otherwise no wrapping is done.
+      # @rbs wrap: Fixnum | nil -- if wrap is a number, wraps text to +wrap+
       def initialize(wrap = nil)
         @wrap = wrap
       end
@@ -20,9 +20,9 @@ module YARD
 
       # Wraps text to a specific column length
       #
-      # @param [String] text the text to wrap
-      # @param [Fixnum] _length the column length to wrap to
-      # @return [String] the wrapped text
+      # @rbs text: String -- the text to wrap
+      # @rbs _length: Fixnum -- the column length to wrap to
+      # @rbs return: String -- the wrapped text
       def word_wrap(text, _length = 80)
         # See ruby-talk/10655 / Ernest Ellingson
         text.gsub(/\t/, "     ").gsub(/.{1,50}(?:\s|\Z)/) do

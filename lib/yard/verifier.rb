@@ -43,8 +43,8 @@ module YARD
 
     # Creates a verifier from a set of expressions
     #
-    # @param [Array<String>] expressions a list of Ruby expressions to
     #   parse.
+    # @rbs expressions: Array[String] -- a list of Ruby expressions to
     def initialize(*expressions)
       @expressions = []
       add_expressions(*expressions)
@@ -85,9 +85,9 @@ module YARD
     # Runs a list of objects against the verifier and returns the subset
     # of verified objects.
     #
-    # @param [Array<CodeObjects::Base>] list a list of code objects
-    # @return [Array<CodeObjects::Base>] a list of code objects that match
     #   the verifier.
+    # @rbs list: Array[CodeObjects::Base] -- a list of code objects
+    # @rbs return: Array[CodeObjects::Base] -- a list of code objects that match
     def run(list)
       list.reject {|item| call(item).is_a?(FalseClass) }
     end
@@ -108,7 +108,7 @@ module YARD
     # call returns nil, which means users don't need to perform
     # stringent nil checking
     #
-    # @return [void]
+    # @rbs return: void
     def modify_nilclass
       NILCLASS_METHODS.each do |meth|
         NilClass.send(:define_method, meth) {|*args| }
@@ -116,7 +116,7 @@ module YARD
     end
 
     # Returns the state of NilClass back to normal
-    # @return [void]
+    # @rbs return: void
     def unmodify_nilclass
       NILCLASS_METHODS.each do |meth|
         next unless nil.respond_to?(meth)
@@ -126,7 +126,7 @@ module YARD
 
     # Creates the +__execute+ method by evaluating the expressions
     # as Ruby code
-    # @return [void]
+    # @rbs return: void
     def create_method_from_expressions
       expr = expressions.map {|e| "(#{parse_expression(e)})" }.join(" && ")
 

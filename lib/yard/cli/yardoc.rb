@@ -238,9 +238,9 @@ module YARD
       # Runs the commandline utility, parsing arguments and generating
       # output if set.
       #
-      # @param [Array<String>] args the list of arguments. If the list only
       #   contains a single nil value, skip calling of {#parse_arguments}
-      # @return [void]
+      # @rbs args: Array[String] -- the list of arguments. If the list only
+      # @rbs return: void
       def run(*args)
         log.show_progress = true
         if args.empty? || !args.first.nil?
@@ -409,7 +409,7 @@ module YARD
       end
 
       # Adds a set of extra documentation files to be processed
-      # @param [Array<String>] files the set of documentation files
+      # @rbs files: Array[String] -- the set of documentation files
       def add_extra_files(*files)
         files.map! {|f| f.include?("*") ? Dir.glob(f) : f }.flatten!
         files.each do |file|
@@ -419,9 +419,9 @@ module YARD
         end
       end
 
-      # @param file [String] the filename to validate
-      # @param check_exists [Boolean] whether the file should exist on disk
-      # @return [Boolean] whether the file is allowed to be used
+      # @rbs file: String -- the filename to validate
+      # @rbs check_exists: bool -- whether the file should exist on disk
+      # @rbs return: bool -- whether the file is allowed to be used
       def extra_file_valid?(file, check_exists = true)
         if file =~ %r{^(?:\.\./|/)}
           log.warn "Invalid file: #{file}"
@@ -512,7 +512,7 @@ module YARD
       end
 
       # Parses commandline options.
-      # @param [Array<String>] args each tokenized argument
+      # @rbs args: Array[String] -- each tokenized argument
       def optparse(*args)
         opts = OptionParser.new
         opts.banner = "Usage: yard doc [options] [source_files [- extra_files]]"

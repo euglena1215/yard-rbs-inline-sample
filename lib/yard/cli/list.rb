@@ -8,8 +8,8 @@ module YARD
       # Runs the commandline utility, parsing arguments and displaying a
       # list of objects
       #
-      # @param [Array<String>] args the list of arguments.
-      # @return [void]
+      # @rbs args: Array[String] -- the list of arguments.
+      # @rbs return: void
       def run(*args)
         if args.include?('--help')
           log.puts "Usage: yard list [yardoc_options]"

@@ -30,9 +30,9 @@ class YARD::Handlers::Ruby::ClassConditionHandler < YARD::Handlers::Ruby::Base
 
   # Parses the condition part of the if/unless statement
   #
-  # @return [true, false, nil] true if the condition can be definitely
   #   parsed to true, false if not, and nil if the condition cannot be
   #   parsed with certainty (it's dynamic)
+  # @rbs return: true | false | nil -- true if the condition can be definitely
   def parse_condition
     condition = nil
 

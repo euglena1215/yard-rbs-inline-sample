@@ -91,12 +91,12 @@ module YARD
 
         # Parses a path or set of paths
         #
-        # @param [String, Array<String>] paths a path, glob, or list of paths to
         #   parse
-        # @param [Array<String, Regexp>] excluded a list of excluded path matchers
-        # @param [Fixnum] level the logger level to use during parsing. See
         #   {YARD::Logger}
-        # @return [void]
+        # @rbs paths: String | Array[String] -- a path, glob, or list of paths to
+        # @rbs excluded: Array[String | Regexp] -- a list of excluded path matchers
+        # @rbs level: Fixnum -- the logger level to use during parsing. See
+        # @rbs return: void
         def parse(paths = DEFAULT_PATH_GLOB, excluded = [], level = log.level)
           log.debug("Parsing #{paths.inspect} with `#{parser_type}` parser")
           excluded = excluded.map do |path|
@@ -126,9 +126,9 @@ module YARD
 
         # Tokenizes but does not parse the block of code
         #
-        # @param [String] content the block of code to tokenize
-        # @param [Symbol] ptype the parser type to use. See {parser_type}.
-        # @return [Array] a list of tokens
+        # @rbs content: String -- the block of code to tokenize
+        # @rbs ptype: Symbol -- the parser type to use. See {parser_type}.
+        # @rbs return: Array[untyped] -- a list of tokens
         def tokenize(content, ptype = parser_type)
           new(ptype).tokenize(content)
         end
@@ -359,8 +359,8 @@ module YARD
 
         # Parses a list of files in a queue.
         #
-        # @param [Array<String>] files a list of files to queue for parsing
-        # @return [void]
+        # @rbs files: Array[String] -- a list of files to queue for parsing
+        # @rbs return: void
         def parse_in_order(*files)
           global_state = OpenStruct.new
 
@@ -413,8 +413,8 @@ module YARD
       # The main parser method. This should not be called directly. Instead,
       # use the class methods {parse} and {parse_string}.
       #
-      # @param [String, #read, Object] content the source file to parse
-      # @return [Object, nil] the parser object used to parse the source
+      # @rbs content: String | #read | Object -- the source file to parse
+      # @rbs return: Object | nil -- the parser object used to parse the source
       def parse(content = __FILE__)
         case content
         when String
@@ -457,8 +457,8 @@ module YARD
 
       # Tokenizes but does not parse the block of code using the current {#parser_type}
       #
-      # @param [String] content the block of code to tokenize
-      # @return [Array] a list of tokens
+      # @rbs content: String -- the block of code to tokenize
+      # @rbs return: Array[untyped] -- a list of tokens
       def tokenize(content)
         @parser = parser_class.new(content, file)
         @parser.tokenize
@@ -486,7 +486,7 @@ module YARD
       end
 
       # Runs a {Handlers::Processor} object to post process the parsed statements.
-      # @return [void]
+      # @rbs return: void
       def post_process
         return unless @parser.respond_to?(:enumerator)
 
@@ -503,8 +503,8 @@ module YARD
 
       # Guesses the parser type to use depending on the file extension.
       #
-      # @param [String] filename the filename to use to guess the parser type
-      # @return [Symbol] a parser type that matches the filename
+      # @rbs filename: String -- the filename to use to guess the parser type
+      # @rbs return: Symbol -- a parser type that matches the filename
       def parser_type_for_filename(filename)
         ext = (File.extname(filename)[1..-1] || "").downcase
         type = self.class.parser_type_for_extension(ext)

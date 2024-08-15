@@ -64,8 +64,8 @@ class YARD::Handlers::Ruby::Legacy::ClassHandler < YARD::Handlers::Ruby::Legacy:
   # formatted as a list of member names. Expects the user will have used symbols
   # to define the struct member names
   #
-  # @param [String] superstring the string declaring the superclass
-  # @return [Array<String>] a list of member names
+  # @rbs superstring: String -- the string declaring the superclass
+  # @rbs return: Array[String] -- a list of member names
   def extract_parameters(superstring)
     paramstring = superstring.match(/\A(O?Struct)\.new\((.*?)\)/)[2]
     paramstring.split(",").select {|x| x.strip[0, 1] == ":" }.map {|x| x.strip[1..-1] } # the 1..-1 chops the leading :

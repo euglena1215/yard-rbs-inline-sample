@@ -88,7 +88,7 @@ module YARD
       attr_accessor :extra_state
 
       # Creates a new Processor for a +file+.
-      # @param [Parser::SourceParser] parser the parser used to initialize the processor
+      # @rbs parser: Parser::SourceParser -- the parser used to initialize the processor
       def initialize(parser)
         @file = parser.file || "(stdin)"
         @namespace = YARD::Registry.root
@@ -105,8 +105,8 @@ module YARD
       # Processes a list of statements by finding handlers to process each
       # one.
       #
-      # @param [Array] statements a list of statements
-      # @return [void]
+      # @rbs statements: Array[untyped] -- a list of statements
+      # @rbs return: void
       def process(statements)
         statements.each_with_index do |stmt, _index|
           find_handlers(stmt).each do |handler|
@@ -168,15 +168,15 @@ module YARD
       end
 
       # Returns the handler base class
-      # @return [Base] the base class
+      # @rbs return: Base -- the base class
       def handler_base_class
         handler_base_namespace.const_get(:Base)
       end
 
       # The module holding the handlers to be loaded
       #
-      # @return [Module] the module containing the handlers depending on
       #   {#parser_type}.
+      # @rbs return: Module -- the module containing the handlers depending on
       def handler_base_namespace
         self.class.namespace_for_handler[parser_type]
       end
@@ -184,7 +184,7 @@ module YARD
       # Loads handlers from {#handler_base_namespace}. This ensures that
       # Ruby1.9 handlers are never loaded into 1.8; also lowers the amount
       # of modules that are loaded
-      # @return [void]
+      # @rbs return: void
       def load_handlers
         return if @handlers_loaded[parser_type]
         handler_base_namespace.constants.each do |c|

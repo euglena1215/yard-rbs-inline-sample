@@ -33,7 +33,7 @@ module YARD
       end
 
       class << self
-        # @return [Boolean] true if gettext is available, false otherwise.
+        # @rbs return: bool -- true if gettext is available, false otherwise.
         def available?
           !@@gettext_version.nil?
         end
@@ -41,8 +41,8 @@ module YARD
 
       # Parses PO file.
       #
-      # @param [String] file path of PO file to be parsed.
-      # @return [Hash<String, String>] parsed messages.
+      # @rbs file: String -- path of PO file to be parsed.
+      # @rbs return: Hash[String | String] -- parsed messages.
       def parse(file)
         case @@gettext_version
         when 2

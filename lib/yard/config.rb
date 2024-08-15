@@ -115,7 +115,7 @@ module YARD
 
     # Loads settings from {CONFIG_FILE}. This method is called by YARD at
     # load time and should not be called by the user.
-    # @return [void]
+    # @rbs return: void
     def self.load
       self.options = SymbolHash.new(false)
       options.update(DEFAULT_CONFIG_OPTIONS)
@@ -131,7 +131,7 @@ module YARD
     end
 
     # Saves settings to {CONFIG_FILE}.
-    # @return [void]
+    # @rbs return: void
     def self.save
       require 'yaml'
       Dir.mkdir(CONFIG_DIR) unless File.directory?(CONFIG_DIR)
@@ -142,7 +142,7 @@ module YARD
     # those listed in +~/.yard/ignored_plugins+. This is called immediately
     # after YARD is loaded to allow plugin support.
     #
-    # @return [Boolean] true if all plugins loaded successfully, false otherwise.
+    # @rbs return: bool -- true if all plugins loaded successfully, false otherwise.
     def self.load_plugins
       load_gem_plugins &&
         load_autoload_plugins &&
@@ -152,8 +152,8 @@ module YARD
     # Loads an individual plugin by name. It is not necessary to include the
     # +yard-+ plugin prefix here.
     #
-    # @param [String] name the name of the plugin (with or without +yard-+ prefix)
-    # @return [Boolean] whether the plugin was successfully loaded
+    # @rbs name: String -- the name of the plugin (with or without +yard-+ prefix)
+    # @rbs return: bool -- whether the plugin was successfully loaded
     def self.load_plugin(name)
       name = translate_plugin_name(name)
       return false if options[:ignored_plugins].include?(name)
@@ -210,7 +210,7 @@ module YARD
     end
 
     # Print a warning if the plugin failed to load
-    # @return [false]
+    # @rbs return: false
     def self.load_plugin_failed(name, exception)
       log.error "Error loading plugin '#{name}'"
       log.backtrace(exception) if $DEBUG
@@ -247,8 +247,8 @@ module YARD
     end
 
     # Sanitizes and normalizes a plugin name to include the 'yard-' prefix.
-    # @param [String] name the plugin name
-    # @return [String] the sanitized and normalized plugin name.
+    # @rbs name: String -- the plugin name
+    # @rbs return: String -- the sanitized and normalized plugin name.
     def self.translate_plugin_name(name)
       name = name.delete('/') # Security sanitization
       name = "yard-" + name unless name =~ YARD_PLUGIN_PREFIX
@@ -264,7 +264,7 @@ module YARD
       result
     end
 
-    # @return [Array<String>] arguments from commandline and yardopts file
+    # @rbs return: Array[String] -- arguments from commandline and yardopts file
     def self.arguments
       ARGV + @yardopts
     end

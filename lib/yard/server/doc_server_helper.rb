@@ -56,8 +56,8 @@ module YARD
         abs_url(base_path(router.docs_prefix), 'index')
       end
 
-      # @param path_components [Array<String>] components of a URL
-      # @return [String] the absolute path from any mounted base URI.
+      # @rbs path_components: Array[String] -- components of a URL
+      # @rbs return: String -- the absolute path from any mounted base URI.
       def abs_url(*path_components)
         File.join(router.request.script_name, *path_components)
       end
@@ -71,16 +71,16 @@ module YARD
         path + (@single_library ? '' : "/#{libname}")
       end
 
-      # @return [Router] convenience method for accessing the router
+      # @rbs return: Router -- convenience method for accessing the router
       def router; @adapter.router end
 
-      # @return [String] a timestamp for a given file
+      # @rbs return: String -- a timestamp for a given file
       def mtime(file)
         file = YARD::Server::Commands::StaticFileHelpers.find_file(@adapter, file)
         file ? File.mtime(file).to_i : nil
       end
 
-      # @return [String] a URL for a file with a timestamp
+      # @rbs return: String -- a URL for a file with a timestamp
       def mtime_url(file)
         url = url_for(file)
         time = mtime(file)

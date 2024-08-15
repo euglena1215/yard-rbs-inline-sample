@@ -64,7 +64,7 @@ module YARD
       protected
 
       # Defines the rake task
-      # @return [void]
+      # @rbs return: void
       def define
         desc "Generate YARD Documentation" unless ::Rake.application.last_description
         task(name) do

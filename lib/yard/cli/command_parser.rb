@@ -59,7 +59,7 @@ module YARD
 
       # Runs the {Command} object matching the command name of the first
       # argument.
-      # @return [void]
+      # @rbs return: void
       def run(*args)
         unless args == ['--help']
           if args.empty? || args.first =~ /^-/

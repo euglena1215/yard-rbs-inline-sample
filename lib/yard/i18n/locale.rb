@@ -30,7 +30,7 @@ module YARD
 
       # Creates a locale for +name+ locale.
       #
-      # @param [String] name the locale name.
+      # @rbs name: String -- the locale name.
       def initialize(name)
         @name = name
         @messages = {}
@@ -38,9 +38,9 @@ module YARD
 
       # Loads translation messages from +locale_directory+/{#name}.po.
       #
-      # @param [String] locale_directory the directory path that has
       #   {#name}.po.
-      # @return [Boolean] +true+ if PO file exists, +false+ otherwise.
+      # @rbs locale_directory: String -- the directory path that has
+      # @rbs return: bool -- +true+ if PO file exists, +false+ otherwise.
       def load(locale_directory)
         return false if @name.nil?
 
@@ -56,9 +56,9 @@ module YARD
         true
       end
 
-      # @param [String] message the translation target message.
-      # @return [String] translated message. If translation isn't
       #   registered, the +message+ is returned.
+      # @rbs message: String -- the translation target message.
+      # @rbs return: String -- translated message. If translation isn't
       def translate(message)
         @messages[message] || message
       end

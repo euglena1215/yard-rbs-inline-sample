@@ -9,8 +9,8 @@ module YARD
       # Runs the commandline utility, parsing arguments and displaying a
       # list of markup types
       #
-      # @param [Array<String>] args the list of arguments.
-      # @return [void]
+      # @rbs args: Array[String] -- the list of arguments.
+      # @rbs return: void
       def run(*args) # rubocop:disable Lint/UnusedMethodArgument
         log.puts "Available markup types for `doc' command:"
         log.puts

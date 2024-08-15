@@ -87,7 +87,7 @@ module YARD
       end
 
       # Returns a text representation of the Proxy
-      # @return [String] the object's #inspect method or P(OBJECTPATH)
+      # @rbs return: String -- the object's #inspect method or P(OBJECTPATH)
       def inspect
         to_obj ? to_obj.inspect : "P(#{path})"
       end
@@ -95,8 +95,8 @@ module YARD
       # If the proxy resolves to an object, returns its path, otherwise
       # guesses at the correct path using the original namespace and name.
       #
-      # @return [String] the assumed path of the proxy (or the real path
       #   of the resolved object)
+      # @rbs return: String -- the assumed path of the proxy (or the real path
       def path
         to_obj ? to_obj.path : proxy_path
       end
@@ -104,17 +104,17 @@ module YARD
       alias to_str path
       alias title path
 
-      # @return [Boolean]
+      # @rbs return: bool
       def is_a?(klass)
         to_obj ? to_obj.is_a?(klass) : self.class <= klass
       end
 
-      # @return [Boolean]
+      # @rbs return: bool
       def ===(other)
         to_obj ? to_obj === other : self.class <= other.class
       end
 
-      # @return [Boolean]
+      # @rbs return: bool
       def <=>(other)
         if other.respond_to? :path
           path <=> other.path
@@ -123,7 +123,7 @@ module YARD
         end
       end
 
-      # @return [Boolean]
+      # @rbs return: bool
       def equal?(other)
         if other.respond_to? :path
           path == other.path
@@ -133,12 +133,12 @@ module YARD
       end
       alias == equal?
 
-      # @return [Integer] the object's hash value (for equality checking)
+      # @rbs return: Integer -- the object's hash value (for equality checking)
       def hash; path.hash end
 
       # Returns the class name of the object the proxy is mimicking, if
       # resolved. Otherwise returns +Proxy+.
-      # @return [Class] the resolved object's class or +Proxy+
+      # @rbs return: Class -- the resolved object's class or +Proxy+
       def class
         to_obj ? to_obj.class : Proxy
       end
@@ -153,21 +153,21 @@ module YARD
       end
 
       # Allows a parser to infer the type of the proxy by its path.
-      # @param [#to_sym] type the proxy's inferred type
-      # @return [void]
+      # @rbs type: #to_sym -- the proxy's inferred type
+      # @rbs return: void
       def type=(type) @type = type ? type.to_sym : nil end
 
-      # @return [Boolean]
+      # @rbs return: bool
       def instance_of?(klass)
         self.class == klass
       end
 
-      # @return [Boolean]
+      # @rbs return: bool
       def kind_of?(klass)
         self.class <= klass
       end
 
-      # @return [Boolean]
+      # @rbs return: bool
       def respond_to?(meth, include_private = false)
         to_obj ? to_obj.respond_to?(meth, include_private) : super
       end
@@ -208,7 +208,7 @@ module YARD
       # references by checking if any objects by this name are
       # registered all the way up the namespace tree.
       #
-      # @return [Base, nil] the registered code object or nil
+      # @rbs return: Base | nil -- the registered code object or nil
       def to_obj
         return @obj if @obj
         @obj = Registry.resolve(@namespace, (@imethod ? ISEP : '') + @name.to_s, false, false, @type)

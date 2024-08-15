@@ -80,8 +80,8 @@ module YARD
           nil
         end
 
-        # @return [Boolean] whether caller method matches a macro or
         #   its alias names.
+        # @rbs return: bool -- whether caller method matches a macro or
         def macro_name_matches(macro)
           objs = [macro.method_object]
           if objs.first.type != :proxy && objs.first.respond_to?(:aliases)

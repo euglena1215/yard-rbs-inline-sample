@@ -16,14 +16,14 @@ module YARD
       # Runs the commandline utility, parsing arguments and displaying an object
       # from the {Registry}.
       #
-      # @param [Array<String>] args the list of arguments.
-      # @return [void]
+      # @rbs args: Array[String] -- the list of arguments.
+      # @rbs return: void
       def run(*args)
         return unless parse_arguments(*args)
         log.puts wrap_layout(format_objects)
       end
 
-      # @return [String] the output data for all formatted objects
+      # @rbs return: String -- the output data for all formatted objects
       def format_objects
         @objects.inject([]) do |arr, obj|
           arr.push obj.format(options)
@@ -42,7 +42,7 @@ module YARD
       end
 
       # Parses commandline options.
-      # @param [Array<String>] args each tokenized argument
+      # @rbs args: Array[String] -- each tokenized argument
       def parse_arguments(*args)
         opts = OptionParser.new
         opts.banner = "Usage: yard display [options] OBJECT [OTHER OBJECTS]"

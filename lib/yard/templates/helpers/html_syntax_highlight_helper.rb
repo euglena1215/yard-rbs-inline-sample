@@ -7,8 +7,8 @@ module YARD
         include ModuleHelper
 
         # Highlights Ruby source
-        # @param [String] source the Ruby source code
-        # @return [String] the highlighted Ruby source
+        # @rbs source: String -- the Ruby source code
+        # @rbs return: String -- the highlighted Ruby source
         def html_syntax_highlight_ruby(source)
           if Parser::SourceParser.parser_type == :ruby
             html_syntax_highlight_ruby_ripper(source)

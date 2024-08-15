@@ -34,7 +34,7 @@ module YARD
 
       # Serializes object with data to its serialized path (prefixed by the +#basepath+).
       #
-      # @return [String] the written data (for chaining)
+      # @rbs return: String -- the written data (for chaining)
       def serialize(object, data)
         path = File.join(basepath, serialized_path(object))
         log.debug "Serializing to #{path}"
@@ -43,10 +43,10 @@ module YARD
 
       # Implements the serialized path of a code object.
       #
-      # @param [CodeObjects::Base, CodeObjects::ExtraFileObject, String] object
       #   the object to get a path for. The path of a string is the string itself.
-      # @return [String] if object is a String, returns
       #   object, otherwise the path on disk (without the basepath).
+      # @rbs object: CodeObjects::Base | CodeObjects::ExtraFileObject | String
+      # @rbs return: String -- if object is a String, returns
       def serialized_path(object)
         return object if object.is_a?(String)
 
@@ -66,8 +66,8 @@ module YARD
 
       # Checks the disk for an object and returns whether it was serialized.
       #
-      # @param [CodeObjects::Base] object the object to check
-      # @return [Boolean] whether an object has been serialized to disk
+      # @rbs object: CodeObjects::Base -- the object to check
+      # @rbs return: bool -- whether an object has been serialized to disk
       def exists?(object)
         File.exist?(File.join(basepath, serialized_path(object)))
       end
@@ -98,7 +98,7 @@ module YARD
         end
       end
 
-      # @return [String] the filesystem mapped name of a given object.
+      # @rbs return: String -- the filesystem mapped name of a given object.
       def mapped_name(object)
         build_filename_map unless @name_map
         map = @name_map[object.path.downcase]

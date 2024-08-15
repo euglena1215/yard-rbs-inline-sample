@@ -95,9 +95,9 @@ module YARD
 
       # Extracts the name from raw tag text returning the name and remaining value
       #
-      # @param [String] text the raw tag text
-      # @return [Array] an array holding the name as the first element and the
       #                 value as the second element
+      # @rbs text: String -- the raw tag text
+      # @rbs return: Array[untyped] -- an array holding the name as the first element and the
       def extract_name_from_text(text)
         text.strip.split(/\s+/, 2)
       end

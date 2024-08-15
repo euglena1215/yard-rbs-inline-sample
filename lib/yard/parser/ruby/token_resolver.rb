@@ -11,8 +11,8 @@ module YARD
 
         # Creates a token resolver for given source.
         #
-        # @param source [String] the source code to tokenize
-        # @param namespace [CodeObjects::Base] the object/namespace to resolve from
+        # @rbs source: String -- the source code to tokenize
+        # @rbs namespace: CodeObjects::Base -- the object/namespace to resolve from
         def initialize(source, namespace = Registry.root)
           @tokens = RubyParser.parse(source, '(tokenize)').tokens
           raise ParserSyntaxError if @tokens.empty? && !source.empty?

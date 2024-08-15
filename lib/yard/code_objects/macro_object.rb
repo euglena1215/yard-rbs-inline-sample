@@ -32,11 +32,11 @@ module YARD
 
       class << self
         # Creates a new macro and fills in the relevant properties.
-        # @param [String] macro_name the name of the macro, must be unique.
-        # @param [String] data the data the macro should expand when re-used
-        # @param [CodeObjects::Base] method_object an object to attach this
         #   macro to. If supplied, {#attached?} will be true
-        # @return [MacroObject] the newly created object
+        # @rbs macro_name: String -- the name of the macro, must be unique.
+        # @rbs data: String -- the data the macro should expand when re-used
+        # @rbs method_object: CodeObjects::Base -- an object to attach this
+        # @rbs return: MacroObject -- the newly created object
         def create(macro_name, data, method_object = nil)
           obj = new(:root, macro_name)
           obj.macro_data = data
@@ -45,9 +45,8 @@ module YARD
         end
 
         # Finds a macro using +macro_name+
-        # @param [#to_s] macro_name the name of the macro
-        # @return [MacroObject] if a macro is found
-        # @return [nil] if there is no registered macro by that name
+        # @rbs macro_name: #to_s -- the name of the macro
+        # @rbs return: nil -- if there is no registered macro by that name
         def find(macro_name)
           Registry.at('.macro.' + macro_name.to_s)
         end
@@ -145,7 +144,7 @@ module YARD
       #   attached to.
       attr_accessor :method_object
 
-      # @return [Boolean] whether this macro is attached to a method
+      # @rbs return: bool -- whether this macro is attached to a method
       def attached?; method_object ? true : false end
 
       # Overrides {Base#path} so the macro path is ".macro.MACRONAME"

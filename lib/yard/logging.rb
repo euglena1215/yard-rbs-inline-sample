@@ -17,13 +17,13 @@ module YARD
     def io; @logdev end
     def io=(pipe) @logdev = pipe end
 
-    # @return [Boolean] whether backtraces should be shown (by default
     #   this is on).
+    # @rbs return: bool -- whether backtraces should be shown (by default
     def show_backtraces; @show_backtraces || level == DEBUG end
     attr_writer :show_backtraces
 
-    # @return [Boolean] whether progress indicators should be shown when
     #   logging CLIs (by default this is off).
+    # @rbs return: bool -- whether progress indicators should be shown when
     def show_progress
       return false if YARD.ruby18? # threading is too ineffective for progress support
       return false if YARD.windows? # windows has poor ANSI support
@@ -34,7 +34,7 @@ module YARD
     attr_writer :show_progress
 
     # The logger instance
-    # @return [Logger] the logger instance
+    # @rbs return: Logger -- the logger instance
     def self.instance(pipe = STDOUT)
       @logger ||= new(pipe)
     end
@@ -148,9 +148,9 @@ module YARD
 
     # Prints the backtrace +exc+ to the logger as error data.
     #
-    # @param [Array<String>] exc the backtrace list
-    # @param [Symbol] level_meth the level to log backtrace at
-    # @return [void]
+    # @rbs exc: Array[String] -- the backtrace list
+    # @rbs level_meth: Symbol -- the level to log backtrace at
+    # @rbs return: void
     def backtrace(exc, level_meth = :error)
       return unless show_backtraces
       send(level_meth, "#{exc.class.class_name}: #{exc.message}")

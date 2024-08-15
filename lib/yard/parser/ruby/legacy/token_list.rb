@@ -15,9 +15,9 @@ module YARD
         end.join
       end
 
-      # @param [TokenList, Token, String] tokens
       #   A list of tokens. If the token is a string, it
       #   is parsed with {RubyLex}.
+      # @rbs tokens: TokenList | Token | String
       def push(*tokens)
         tokens.each do |tok|
           if tok.is_a?(TokenList) || tok.is_a?(Array)

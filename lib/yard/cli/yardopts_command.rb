@@ -66,7 +66,7 @@ module YARD
       private
 
       # Parses the .yardopts file for default yard options
-      # @return [Array<String>] an array of options parsed from .yardopts
+      # @rbs return: Array[String] -- an array of options parsed from .yardopts
       def yardopts(file = options_file)
         return [] unless use_yardopts_file
         File.read_binary(file).shell_split
@@ -98,7 +98,7 @@ module YARD
       end
 
       # Reads a .document file in the directory to get source file globs
-      # @return [Array<String>] an array of files parsed from .document
+      # @rbs return: Array[String] -- an array of files parsed from .document
       def support_rdoc_document_file!(file = '.document')
         return [] unless use_document_file
         File.read(file).gsub(/^[ \t]*#.+/m, '').split(/\s+/)

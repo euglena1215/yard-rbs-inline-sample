@@ -124,13 +124,13 @@ module YARD
       end
       attr_writer :source_path
 
-      # @param [String] name the name of the library
-      # @param [String] version the specific (usually, but not always, numeric) library
       #   version
-      # @param [String] yardoc the location of the yardoc file, or nil if it is
       #   generated later
-      # @param [Symbol] source the location of the files used to build the yardoc.
       #   Builtin source types are +:disk+ or +:gem+.
+      # @rbs name: String -- the name of the library
+      # @rbs version: String -- the specific (usually, but not always, numeric) library
+      # @rbs yardoc: String -- the location of the yardoc file, or nil if it is
+      # @rbs source: Symbol -- the location of the files used to build the yardoc.
       def initialize(name, version = nil, yardoc = nil, source = :disk)
         self.name = name
         self.yardoc_file = yardoc
@@ -138,18 +138,18 @@ module YARD
         self.source = source
       end
 
-      # @param [Boolean] url_format if true, returns the string in a URI-compatible
       #   format (for appending to a URL). Otherwise, it is given in a more human
       #   readable format.
-      # @return [String] the string representation of the library.
+      # @rbs url_format: bool -- if true, returns the string in a URI-compatible
+      # @rbs return: String -- the string representation of the library.
       def to_s(url_format = true)
         version ? "#{name}#{url_format ? '/' : '-'}#{version}" : name.to_s
       end
 
-      # @return [Fixnum] used for Hash mapping.
+      # @rbs return: Fixnum -- used for Hash mapping.
       def hash; to_s.hash end
 
-      # @return [Boolean] whether another LibraryVersion is equal to this one
+      # @rbs return: bool -- whether another LibraryVersion is equal to this one
       def eql?(other)
         other.is_a?(LibraryVersion) && other.name == name &&
           other.version == version && other.yardoc_file == yardoc_file
@@ -157,8 +157,8 @@ module YARD
       alias == eql?
       alias equal? eql?
 
-      # @return [Boolean] whether the library has been completely processed
       #   and is ready to be served
+      # @rbs return: bool -- whether the library has been completely processed
       def ready?
         return false if yardoc_file.nil?
         serializer.complete?
@@ -185,9 +185,8 @@ module YARD
         send(meth) if respond_to?(meth, true)
       end
 
-      # @return [Gem::Specification] a gemspec object for a given library. Used
       #   for :gem source types.
-      # @return [nil] if there is no installed gem for the library
+      # @rbs return: nil -- if there is no installed gem for the library
       def gemspec
         ver = version ? "= #{version}" : ">= 0"
         YARD::GemIndex.find_all_by_name(name, ver).last
@@ -239,17 +238,17 @@ module YARD
         raise LibraryNotPreparedError
       end
 
-      # @return [String] the source path for a disk source
+      # @rbs return: String -- the source path for a disk source
       def source_path_for_disk
         File.dirname(yardoc_file) if yardoc_file
       end
 
-      # @return [String] the source path for a gem source
+      # @rbs return: String -- the source path for a gem source
       def source_path_for_gem
         gemspec.full_gem_path if gemspec
       end
 
-      # @return [String] the yardoc file for a gem source
+      # @rbs return: String -- the yardoc file for a gem source
       def yardoc_file_for_gem
         require 'rubygems'
         ver = version ? "= #{version}" : ">= 0"

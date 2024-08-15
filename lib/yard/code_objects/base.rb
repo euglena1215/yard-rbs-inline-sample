@@ -6,16 +6,16 @@ module YARD
     class CodeObjectList < Array
       # Creates a new object list associated with a namespace
       #
-      # @param [NamespaceObject] owner the namespace the list should be associated with
-      # @return [CodeObjectList]
+      # @rbs owner: NamespaceObject -- the namespace the list should be associated with
+      # @rbs return: CodeObjectList
       def initialize(owner = Registry.root)
         @owner = owner
       end
 
       # Adds a new value to the list
       #
-      # @param [Base] value a code object to add
-      # @return [CodeObjectList] self
+      # @rbs value: Base -- a code object to add
+      # @rbs return: CodeObjectList -- self
       def push(value)
         value = Proxy.new(@owner, value) if value.is_a?(String) || value.is_a?(Symbol)
         if value.is_a?(CodeObjects::Base) || value.is_a?(Proxy)
@@ -214,8 +214,8 @@ module YARD
 
         # Compares the class with subclasses
         #
-        # @param [Object] other the other object to compare classes with
-        # @return [Boolean] true if other is a subclass of self
+        # @rbs other: Object -- the other object to compare classes with
+        # @rbs return: bool -- true if other is a subclass of self
         def ===(other)
           other.is_a?(self)
         end
@@ -270,11 +270,10 @@ module YARD
       end
 
       # The name of the object
-      # @param [Boolean] prefix whether to show a prefix. Implement
       #   this in a subclass to define how the prefix is showed.
-      # @return [Symbol] if prefix is false, the symbolized name
-      # @return [String] if prefix is true, prefix + the name as a String.
       #   This must be implemented by the subclass.
+      # @rbs prefix: bool -- whether to show a prefix. Implement
+      # @rbs return: String -- if prefix is true, prefix + the name as a String.
       def name(prefix = false)
         prefix ? @name.to_s : (defined?(@name) && @name)
       end
@@ -282,11 +281,11 @@ module YARD
       # Associates a file with a code object, optionally adding the line where it was defined.
       # By convention, '<stdin>' should be used to associate code that comes form standard input.
       #
-      # @param [String] file the filename ('<stdin>' for standard input)
-      # @param [Fixnum, nil] line the line number where the object lies in the file
-      # @param [Boolean] has_comments whether or not the definition has comments associated. This
       #   will allow {#file} to return the definition where the comments were made instead
       #   of any empty definitions that might have been parsed before (module namespaces for instance).
+      # @rbs file: String -- the filename ('<stdin>' for standard input)
+      # @rbs line: Fixnum | nil -- the line number where the object lies in the file
+      # @rbs has_comments: bool -- whether or not the definition has comments associated. This
       def add_file(file, line = nil, has_comments = false)
         raise(ArgumentError, "file cannot be nil or empty") if file.nil? || file == ''
         obj = [file.to_s, line]
@@ -302,24 +301,22 @@ module YARD
       # Returns the filename the object was first parsed at, taking
       # definitions with docstrings first.
       #
-      # @return [String] a filename
-      # @return [nil] if there is no file associated with the object
+      # @rbs return: nil -- if there is no file associated with the object
       def file
         @files.first ? @files.first[0] : nil
       end
 
       # Returns the line the object was first parsed at (or nil)
       #
-      # @return [Fixnum] the line where the object was first defined.
-      # @return [nil] if there is no line associated with the object
+      # @rbs return: nil -- if there is no line associated with the object
       def line
         @files.first ? @files.first[1] : nil
       end
 
       # Tests if another object is equal to this, including a proxy
-      # @param [Base, Proxy] other if other is a {Proxy}, tests if
       #   the paths are equal
-      # @return [Boolean] whether or not the objects are considered the same
+      # @rbs other: Base | Proxy -- if other is a {Proxy}, tests if
+      # @rbs return: bool -- whether or not the objects are considered the same
       def equal?(other)
         if other.is_a?(Base) || other.is_a?(Proxy)
           path == other.path
@@ -330,10 +327,10 @@ module YARD
       alias == equal?
       alias eql? equal?
 
-      # @return [Integer] the object's hash value (for equality checking)
+      # @rbs return: Integer -- the object's hash value (for equality checking)
       def hash; path.hash end
 
-      # @return [nil] this object does not turn into an array
+      # @rbs return: nil -- this object does not turn into an array
       def to_ary; nil end
 
       # Accesses a custom attribute on the object
@@ -382,9 +379,9 @@ module YARD
 
       # Attaches source code to a code object with an optional file location
       #
-      # @param [#source, String] statement
       #   the +Parser::Statement+ holding the source code or the raw source
       #   as a +String+ for the definition of the code object only (not the block)
+      # @rbs statement: #source | String
       def source=(statement)
         if statement.respond_to?(:source)
           @source = format_source(statement.source.strip)
@@ -399,9 +396,9 @@ module YARD
 
       # The documentation string associated with the object
       #
-      # @param [String, I18n::Locale] locale (I18n::Locale.default)
       #   the locale of the documentation string.
-      # @return [Docstring] the documentation string
+      # @rbs locale: String | I18n::Locale -- (I18n::Locale.default)
+      # @rbs return: Docstring -- the documentation string
       def docstring(locale = I18n::Locale.default)
         if locale.nil?
           @docstring.resolve_reference
@@ -421,9 +418,9 @@ module YARD
       # Attaches a docstring to a code object by parsing the comments attached to the statement
       # and filling the {#tags} and {#docstring} methods with the parsed information.
       #
-      # @param [String, Array<String>, Docstring] comments
       #   the comments attached to the code object to be parsed
       #   into a docstring and meta tags.
+      # @rbs comments: String | Array[String] | Docstring
       def docstring=(comments)
         @docstrings.clear
         @docstring = Docstring === comments ?
@@ -433,7 +430,7 @@ module YARD
       # Default type is the lowercase class name without the "Object" suffix.
       # Override this method to provide a custom object type
       #
-      # @return [Symbol] the type of code object this represents
+      # @rbs return: Symbol -- the type of code object this represents
       def type
         obj_name = self.class.name.split('::').last
         obj_name.gsub!(/Object$/, '')
@@ -509,16 +506,16 @@ module YARD
       end
 
       # Inspects the object, returning the type and path
-      # @return [String] a string describing the object
+      # @rbs return: String -- a string describing the object
       def inspect
         "#<yardoc #{type} #{path}>"
       end
 
       # Sets the namespace the object is defined in.
       #
-      # @param [NamespaceObject, :root, nil] obj the new namespace (:root
       #   for {Registry.root}). If obj is nil, the object is unregistered
       #   from the Registry.
+      # @rbs obj: NamespaceObject | :root | nil -- the new namespace (:root
       def namespace=(obj)
         if @namespace
           @namespace.children.delete(self)
@@ -571,8 +568,8 @@ module YARD
       # method is instance or class respectively). {#path} depends on this
       # value to generate the full path in the form: namespace.path + sep + name
       #
-      # @return [String] the component that separates the namespace path
       #   and the name (default is {NSEP})
+      # @rbs return: String -- the component that separates the namespace path
       def sep; NSEP end
 
       protected
@@ -594,8 +591,8 @@ module YARD
 
       # Formats source code by removing leading indentation
       #
-      # @param [String] source the source code to format
-      # @return [String] formatted source
+      # @rbs source: String -- the source code to format
+      # @rbs return: String -- formatted source
       def format_source(source)
         source = source.chomp
         last = source.split(/\r?\n/).last

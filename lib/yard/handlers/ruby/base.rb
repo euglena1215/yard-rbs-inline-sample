@@ -18,12 +18,12 @@ module YARD
       #   end
       class HandlesExtension
         # Creates a new extension with a specific matcher value +name+
-        # @param [Object] name the matcher value to check against {#matches?}
+        # @rbs name: Object -- the matcher value to check against {#matches?}
         def initialize(name) @name = name end
 
         # Tests if the node matches the handler
-        # @param [Parser::Ruby::AstNode] node a Ruby node
-        # @return [Boolean] whether the +node+ matches the handler
+        # @rbs node: Parser::Ruby::AstNode -- a Ruby node
+        # @rbs return: bool -- whether the +node+ matches the handler
         def matches?(node) # rubocop:disable Lint/UnusedMethodArgument
           raise NotImplementedError
         end
@@ -108,8 +108,8 @@ module YARD
 
           # @group Testing for a Handler
 
-          # @return [Boolean] whether or not an {AstNode} object should be
           #   handled by this handler
+          # @rbs return: bool -- whether or not an {AstNode} object should be
           def handles?(node)
             handlers.any? do |a_handler|
               case a_handler

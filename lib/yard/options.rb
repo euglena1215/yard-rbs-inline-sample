@@ -124,8 +124,8 @@ module YARD
       dup.update(opts)
     end
 
-    # @return [Hash] Converts options object to an options hash. All keys
     #   will be symbolized.
+    # @rbs return: Hash[untyped, untyped] -- Converts options object to an options hash. All keys
     def to_hash
       opts = {}
       instance_variables.each do |ivar|
@@ -152,8 +152,8 @@ module YARD
       "<#{self.class}: #{to_hash.inspect}>"
     end
 
-    # @return [Boolean] whether another Options object equals the
     #   keys and values of this options object
+    # @rbs return: bool -- whether another Options object equals the
     def ==(other)
       case other
       when Options; to_hash == other.to_hash
@@ -202,8 +202,8 @@ module YARD
 
     # Deletes an option value for +key+
     #
-    # @param [Symbol, String] key the key to delete a value for
-    # @return [Object] the value that was deleted
+    # @rbs key: Symbol | String -- the key to delete a value for
+    # @rbs return: Object -- the value that was deleted
     def delete(key)
       val = self[key]
       if instance_variable_defined?("@#{key}")

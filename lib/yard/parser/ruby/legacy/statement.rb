@@ -42,7 +42,7 @@ module YARD
         "\t#{line}: #{first_line}"
       end
 
-      # @return [Fixnum] the first line of Ruby source
+      # @rbs return: Fixnum -- the first line of Ruby source
       def line
         tokens.first.line_no
       end

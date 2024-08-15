@@ -21,8 +21,8 @@ module YARD
 
       # This default constructor does nothing. The subclass is responsible for
       # storing the source contents and filename if they are required.
-      # @param [String] source the source contents
-      # @param [String] filename the name of the file if from disk
+      # @rbs source: String -- the source contents
+      # @rbs filename: String -- the name of the file if from disk
       def initialize(source, filename) # rubocop:disable Lint/UnusedMethodArgument
         raise NotImplementedError, "invalid parser implementation"
       end

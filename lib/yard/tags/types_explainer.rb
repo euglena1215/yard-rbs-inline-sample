@@ -5,7 +5,7 @@ module YARD
   module Tags
     class TypesExplainer
       # (see Tag#explain_types)
-      # @param types [Array<String>] a list of types to parse and summarize
+      # @rbs types: Array[String] -- a list of types to parse and summarize
       def self.explain(*types)
         explain!(*types)
       rescue SyntaxError

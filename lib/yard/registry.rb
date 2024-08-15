@@ -41,15 +41,14 @@ module YARD
 
       # Returns the .yardoc file associated with a gem.
       #
-      # @param [String] gem the name of the gem to search for
-      # @param [String] ver_require an optional Gem version requirement
-      # @param [Boolean] for_writing whether or not the method should search
       #   for writable locations
-      # @return [String] if +for_writing+ is set to +true+, returns the best
       #   location suitable to write the .yardoc file. Otherwise, the first
       #   existing location associated with the gem's .yardoc file.
-      # @return [nil] if +for_writing+ is set to false and no yardoc file
       #   is found, returns nil.
+      # @rbs gem: String -- the name of the gem to search for
+      # @rbs ver_require: String -- an optional Gem version requirement
+      # @rbs for_writing: bool -- whether or not the method should search
+      # @rbs return: nil -- if +for_writing+ is set to false and no yardoc file
       def yardoc_file_for_gem(gem, ver_require = ">= 0", for_writing = false)
         specs = YARD::GemIndex.find_all_by_name(gem, ver_require)
         return if specs.empty?
@@ -125,8 +124,8 @@ module YARD
 
       # Loads a yardoc file directly
       #
-      # @param [String] file the yardoc file to load.
-      # @return [Registry] the registry object (for chaining)
+      # @rbs file: String -- the yardoc file to load.
+      # @rbs return: Registry -- the registry object (for chaining)
       def load_yardoc(file = yardoc_file)
         clear
         thread_local_store.load(file)
@@ -165,14 +164,14 @@ module YARD
 
       # Saves the registry to +file+
       #
-      # @param [String] file the yardoc file to save to
-      # @return [Boolean] true if the file was saved
+      # @rbs file: String -- the yardoc file to save to
+      # @rbs return: bool -- true if the file was saved
       def save(merge = false, file = yardoc_file)
         thread_local_store.save(merge, file)
       end
 
       # Deletes the yardoc file from disk
-      # @return [void]
+      # @rbs return: void
       def delete_from_disk
         thread_local_store.destroy
       end
@@ -181,22 +180,22 @@ module YARD
 
       # Registers a new object with the registry
       #
-      # @param [CodeObjects::Base] object the object to register
-      # @return [CodeObjects::Base] the registered object
+      # @rbs object: CodeObjects::Base -- the object to register
+      # @rbs return: CodeObjects::Base -- the registered object
       def register(object)
         return if object.is_a?(CodeObjects::Proxy)
         thread_local_store[object.path] = object
       end
 
       # Deletes an object from the registry
-      # @param [CodeObjects::Base] object the object to remove
-      # @return [void]
+      # @rbs object: CodeObjects::Base -- the object to remove
+      # @rbs return: void
       def delete(object)
         thread_local_store.delete(object.path)
       end
 
       # Clears the registry
-      # @return [void]
+      # @rbs return: void
       def clear
         self.thread_local_store = RegistryStore.new
       end
@@ -247,22 +246,21 @@ module YARD
       end
 
       # Returns the paths of all of the objects in the registry.
-      # @param [Boolean] reload whether to load entire database
-      # @return [Array<String>] all of the paths in the registry.
+      # @rbs reload: bool -- whether to load entire database
+      # @rbs return: Array[String] -- all of the paths in the registry.
       def paths(reload = false)
         thread_local_store.keys(reload).map(&:to_s)
       end
 
       # Returns the object at a specific path.
-      # @param [String, :root] path the pathname to look for. If +path+ is +root+,
       #   returns the {root} object.
-      # @return [CodeObjects::Base] the object at path
-      # @return [nil] if no object is found
+      # @rbs path: String | :root -- the pathname to look for. If +path+ is +root+,
+      # @rbs return: nil -- if no object is found
       def at(path) path ? thread_local_store[path] : nil end
       alias [] at
 
       # The root namespace object.
-      # @return [CodeObjects::RootObject] the root object in the namespace
+      # @rbs return: CodeObjects::RootObject -- the root object in the namespace
       def root; thread_local_store[:root] end
 
       # @param [String] name the locale name.
@@ -308,13 +306,13 @@ module YARD
 
       # @group Managing Source File Checksums
 
-      # @return [Hash{String => String}] a set of checksums for files
+      # @rbs return: Hash{String =] String} -- a set of checksums for files
       def checksums
         thread_local_store.checksums
       end
 
-      # @param [String] data data to checksum
-      # @return [String] the SHA1 checksum for data
+      # @rbs data: String -- data to checksum
+      # @rbs return: String -- the SHA1 checksum for data
       def checksum_for(data)
         Digest::SHA1.hexdigest(data)
       end
@@ -368,10 +366,10 @@ module YARD
 
       # Attempts to resolve a name in a namespace
       #
-      # @param [CodeObjects::NamespaceObject] namespace the starting namespace
-      # @param [String] name the name to look for
-      # @param [Symbol, nil] type the {CodeObjects::Base#type} that the resolved
       #   object must be equal to
+      # @rbs namespace: CodeObjects::NamespaceObject -- the starting namespace
+      # @rbs name: String -- the name to look for
+      # @rbs type: Symbol | nil -- the {CodeObjects::Base#type} that the resolved
       def partial_resolve(namespace, name, type = nil)
         obj = at(name) || at('#' + name) if namespace.root?
         return obj if obj && (type.nil? || obj.type == type)

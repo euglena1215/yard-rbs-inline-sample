@@ -19,8 +19,8 @@ module YARD
 
       # Adds a set of common options to the tail of the OptionParser
       #
-      # @param [OptionParser] opts the option parser object
-      # @return [void]
+      # @rbs opts: OptionParser -- the option parser object
+      # @rbs return: void
       def common_options(opts)
         opts.separator ""
         opts.separator "Other options:"
@@ -48,10 +48,10 @@ module YARD
 
       # Parses the option and gracefully handles invalid switches
       #
-      # @param [OptionParser] opts the option parser object
-      # @param [Array<String>] args the arguments passed from input. This
       #   array will be modified.
-      # @return [void]
+      # @rbs opts: OptionParser -- the option parser object
+      # @rbs args: Array[String] -- the arguments passed from input. This
+      # @rbs return: void
       def parse_options(opts, args)
         opts.parse!(args)
       rescue OptionParser::ParseError => err
@@ -75,8 +75,8 @@ module YARD
 
       # Callback when an unrecognize option is parsed
       #
-      # @param [OptionParser::ParseError] err the exception raised by the
       #   option parser
+      # @rbs err: OptionParser::ParseError -- the exception raised by the
       def unrecognized_option(err)
         log.warn "Unrecognized/#{err.message}"
       end

@@ -31,9 +31,9 @@ module YARD::CodeObjects
     # method in +:class+ scope, but also creates a new (empty) method
     # as a private +:instance+ method on the same class or module.
     #
-    # @param [NamespaceObject] namespace the namespace
-    # @param [String, Symbol] name the method name
-    # @param [Symbol] scope +:instance+, +:class+, or +:module+
+    # @rbs namespace: NamespaceObject -- the namespace
+    # @rbs name: String | Symbol -- the method name
+    # @rbs scope: Symbol -- +:instance+, +:class+, or +:module+
     def initialize(namespace, name, scope = :instance, &block)
       @module_function = false
       @scope = nil
@@ -54,7 +54,7 @@ module YARD::CodeObjects
     end
 
     # Changes the scope of an object from :instance or :class
-    # @param [Symbol] v the new scope
+    # @rbs v: Symbol -- the new scope
     def scope=(v)
       reregister = @scope ? true : false
 
@@ -110,7 +110,7 @@ module YARD::CodeObjects
     end
 
     # Tests if the object is defined as an attribute in the namespace
-    # @return [Boolean] whether the object is an attribute
+    # @rbs return: bool -- whether the object is an attribute
     def is_attribute?
       info = attr_info
       if info
@@ -122,7 +122,7 @@ module YARD::CodeObjects
     end
 
     # Tests if the object is defined as an alias of another method
-    # @return [Boolean] whether the object is an alias
+    # @rbs return: bool -- whether the object is an alias
     def is_alias?
       return false unless namespace.is_a?(NamespaceObject)
       namespace.aliases.key? self
@@ -130,7 +130,7 @@ module YARD::CodeObjects
 
     # Tests boolean {#explicit} value.
     #
-    # @return [Boolean] whether the method is explicitly defined in source
+    # @rbs return: bool -- whether the method is explicitly defined in source
     def is_explicit?
       explicit ? true : false
     end
@@ -145,7 +145,7 @@ module YARD::CodeObjects
     end
 
     # Returns all alias names of the object
-    # @return [Array<MethodObject>] the alias names
+    # @rbs return: Array[MethodObject] -- the alias names
     def aliases
       list = []
       return list unless namespace.is_a?(NamespaceObject)
@@ -157,7 +157,7 @@ module YARD::CodeObjects
 
     # Override path handling for instance methods in the root namespace
     # (they should still have a separator as a prefix).
-    # @return [String] the path of a method
+    # @rbs return: String -- the path of a method
     def path
       @path ||= !namespace || namespace.path == "" ? sep + super : super
     end
@@ -178,7 +178,7 @@ module YARD::CodeObjects
 
     # Override separator to differentiate between class and instance
     # methods.
-    # @return [String] "#" for an instance method, "." for class
+    # @rbs return: String -- "#" for an instance method, "." for class
     def sep
       if scope == :class
         namespace && namespace != YARD::Registry.root ? CSEP : NSEP

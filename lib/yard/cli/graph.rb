@@ -65,7 +65,7 @@ module YARD
       def unrecognized_option(err) end
 
       # Parses commandline options.
-      # @param [Array<String>] args each tokenized argument
+      # @rbs args: Array[String] -- each tokenized argument
       def optparse(*args)
         visibilities = [:public]
         opts = OptionParser.new

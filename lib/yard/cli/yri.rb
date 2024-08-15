@@ -81,7 +81,7 @@ module YARD
       end
 
       # Caches the .yardoc file where an object can be found in the {CACHE_FILE}
-      # @return [void]
+      # @rbs return: void
       def cache_object(name, path)
         return if path == Registry.yardoc_file
         @cache[name] = path
@@ -93,8 +93,8 @@ module YARD
         end
       end
 
-      # @param [CodeObjects::Base] object the object to print.
-      # @return [String] the formatted output for an object.
+      # @rbs object: CodeObjects::Base -- the object to print.
+      # @rbs return: String -- the formatted output for an object.
       def print_object(object)
         if object.type == :method && object.is_alias?
           tmp = P(object.namespace, (object.scope == :instance ? "#" : "") +
@@ -107,9 +107,8 @@ module YARD
       # Locates an object by name starting in the cached paths and then
       # searching through any search paths.
       #
-      # @param [String] name the full name of the object
-      # @return [CodeObjects::Base] an object if found
-      # @return [nil] if no object is found
+      # @rbs name: String -- the full name of the object
+      # @rbs return: nil -- if no object is found
       def find_object(name)
         @search_paths.unshift(@cache[name]) if @cache[name]
         @search_paths.unshift(Registry.yardoc_file)
@@ -135,11 +134,11 @@ module YARD
       # Tries to load the object with name. If successful, caches the object
       # with the cache_path
       #
-      # @param [String] name the object path
-      # @param [String] cache_path the location of the yardoc
       #   db containing the object to cache for future lookups.
       #   No caching is done if this is nil.
-      # @return [void]
+      # @rbs name: String -- the object path
+      # @rbs cache_path: String -- the location of the yardoc
+      # @rbs return: void
       def try_load_object(name, cache_path)
         obj = Registry.at(name)
         cache_object(name, cache_path) if obj && cache_path
@@ -147,7 +146,7 @@ module YARD
       end
 
       # Loads {CACHE_FILE}
-      # @return [void]
+      # @rbs return: void
       def load_cache
         return unless File.file?(CACHE_FILE)
         File.readlines(CACHE_FILE).each do |line|
@@ -157,7 +156,7 @@ module YARD
       end
 
       # Adds all RubyGems yardoc files to search paths
-      # @return [void]
+      # @rbs return: void
       def add_gem_paths
         require 'rubygems'
         gem_paths = []
@@ -186,7 +185,7 @@ module YARD
       end
 
       # Parses commandline options.
-      # @param [Array<String>] args each tokenized argument
+      # @rbs args: Array[String] -- each tokenized argument
       def optparse(*args)
         opts = OptionParser.new
         opts.banner = "Usage: yri [options] <Path to object>"

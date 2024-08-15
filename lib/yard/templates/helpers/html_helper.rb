@@ -18,16 +18,16 @@ module YARD
 
       # Escapes HTML entities
       #
-      # @param [String] text the text to escape
-      # @return [String] the HTML with escaped entities
+      # @rbs text: String -- the text to escape
+      # @rbs return: String -- the HTML with escaped entities
       def h(text)
         CGI.escapeHTML(text.to_s)
       end
 
       # Escapes a URL
       #
-      # @param [String] text the URL
-      # @return [String] the escaped URL
+      # @rbs text: String -- the URL
+      # @rbs return: String -- the escaped URL
       def urlencode(text)
         text = text.dup
         enc = nil
@@ -50,10 +50,10 @@ module YARD
 
       # Turns text into HTML using +markup+ style formatting.
       #
-      # @param [String] text the text to format
-      # @param [Symbol] markup examples are +:markdown+, +:textile+, +:rdoc+.
       #   To add a custom markup type, see {MarkupHelper}
-      # @return [String] the HTML
+      # @rbs text: String -- the text to format
+      # @rbs markup: Symbol -- examples are +:markdown+, +:textile+, +:rdoc+.
+      # @rbs return: String -- the HTML
       def htmlify(text, markup = options.markup)
         markup_meth = "html_markup_#{markup}"
         return text unless respond_to?(markup_meth)
@@ -97,15 +97,15 @@ module YARD
       end
 
       # Converts org-mode to HTML
-      # @param [String] text input org-mode text
-      # @return [String] output HTML
+      # @rbs text: String -- input org-mode text
+      # @rbs return: String -- output HTML
       def html_markup_org(text)
         markup_class(:org).new(text).to_html
       end
 
       # Converts Asciidoc to HTML
-      # @param [String] text input Asciidoc text
-      # @return [String] output HTML
+      # @rbs text: String -- input Asciidoc text
+      # @rbs return: String -- output HTML
       def html_markup_asciidoc(text)
         options = {:attributes => ASCIIDOC_ATTRIBUTES}
         markup_class(:asciidoc).convert(text, options)
@@ -180,7 +180,7 @@ module YARD
         '<pre class="code ruby">' + html_syntax_highlight(source, :ruby) + '</pre>'
       end
 
-      # @return [String] HTMLified text as a single line (paragraphs removed)
+      # @rbs return: String -- HTMLified text as a single line (paragraphs removed)
       def htmlify_line(*args)
         "<div class='inline'>" + htmlify(*args) + "</div>"
       end
@@ -206,7 +206,7 @@ module YARD
         respond_to?(meth) ? send(meth, source) : h(source)
       end
 
-      # @return [String] unhighlighted source
+      # @rbs return: String -- unhighlighted source
       def html_syntax_highlight_plain(source)
         h(source)
       end
@@ -342,8 +342,8 @@ module YARD
 
       # @group URL Helpers
 
-      # @param [CodeObjects::Base] object the object to get an anchor for
-      # @return [String] the anchor for a specific object
+      # @rbs object: CodeObjects::Base -- the object to get an anchor for
+      # @rbs return: String -- the anchor for a specific object
       def anchor_for(object)
         case object
         when CodeObjects::MethodObject
@@ -361,10 +361,10 @@ module YARD
 
       # Returns the URL for an object.
       #
-      # @param [String, CodeObjects::Base] obj the object (or object path) to link to
-      # @param [String] anchor the anchor to link to
-      # @param [Boolean] relative use a relative or absolute link
-      # @return [String] the URL location of the object
+      # @rbs obj: String | CodeObjects::Base -- the object (or object path) to link to
+      # @rbs anchor: String -- the anchor to link to
+      # @rbs relative: bool -- use a relative or absolute link
+      # @rbs return: String -- the URL location of the object
       def url_for(obj, anchor = nil, relative = true)
         link = nil
         return link unless serializer
@@ -401,9 +401,9 @@ module YARD
 
       # Returns the URL for a specific file
       #
-      # @param [String, CodeObjects::ExtraFileObject] filename the filename to link to
-      # @param [String] anchor optional anchor
-      # @return [String] the URL pointing to the file
+      # @rbs filename: String | CodeObjects::ExtraFileObject -- the filename to link to
+      # @rbs anchor: String -- optional anchor
+      # @rbs return: String -- the URL pointing to the file
       def url_for_file(filename, anchor = nil)
         return '' unless serializer
         fromobj = object
@@ -437,16 +437,16 @@ module YARD
 
       # Returns the URL for the main page (README or alphabetic index)
       #
-      # @return [String] the URL pointing to the first main page the
       #   user should see.
+      # @rbs return: String -- the URL pointing to the first main page the
       def url_for_main
         url_for_file("index.html")
       end
 
       # Returns the URL for the alphabetic index page
       #
-      # @return [String] the URL pointing to the first main page the
       #   user should see.
+      # @rbs return: String -- the URL pointing to the first main page the
       def url_for_index
         url_for_file("_index.html")
       end
@@ -454,7 +454,7 @@ module YARD
       # @group Formatting Objects and Attributes
 
       # Formats a list of objects and links them
-      # @return [String] a formatted list of objects
+      # @rbs return: String -- a formatted list of objects
       def format_object_name_list(objects)
         objects.sort_by {|o| o.name.to_s.downcase }.map do |o|
           "<span class='name'>" + linkify(o, o.name) + "</span>"
@@ -463,16 +463,16 @@ module YARD
 
       # Formats a list of types from a tag.
       #
-      # @param [Array<String>, FalseClass] typelist
       #   the list of types to be formatted.
       #
-      # @param [Boolean] brackets omits the surrounding
       #   brackets if +brackets+ is set to +false+.
       #
-      # @return [String] the list of types formatted
       #   as [Type1, Type2, ...] with the types linked
       #   to their respective descriptions.
       #
+      # @rbs typelist: Array[String] | FalseClass
+      # @rbs brackets: bool -- omits the surrounding
+      # @rbs return: String -- the list of types formatted
       def format_types(typelist, brackets = true)
         return unless typelist.is_a?(Array)
         list = typelist.map do |type|
@@ -519,13 +519,13 @@ module YARD
 
       # Formats the signature of method +meth+.
       #
-      # @param [CodeObjects::MethodObject] meth the method object to list
       #   the signature of
-      # @param [Boolean] link whether to link the method signature to the details view
-      # @param [Boolean] show_extras whether to show extra meta-data (visibility, attribute info)
-      # @param [Boolean] full_attr_name whether to show the full attribute name
       #   ("name=" instead of "name")
-      # @return [String] the formatted method signature
+      # @rbs meth: CodeObjects::MethodObject -- the method object to list
+      # @rbs link: bool -- whether to link the method signature to the details view
+      # @rbs show_extras: bool -- whether to show extra meta-data (visibility, attribute info)
+      # @rbs full_attr_name: bool -- whether to show the full attribute name
+      # @rbs return: String -- the formatted method signature
       def signature(meth, link = true, show_extras = true, full_attr_name = true)
         meth = convert_method_to_overload(meth)
 
@@ -598,8 +598,8 @@ module YARD
 
       # Converts a set of hash options into HTML attributes for a tag
       #
-      # @param [Hash{String => String}] opts the tag options
-      # @return [String] the tag attributes of an HTML tag
+      # @rbs opts: Hash{String =] String} -- the tag options
+      # @rbs return: String -- the tag attributes of an HTML tag
       def tag_attrs(opts = {})
         opts.sort_by {|k, _v| k.to_s }.map {|k, v| "#{k}=#{v.to_s.inspect}" if v }.join(" ")
       end
@@ -657,10 +657,10 @@ module YARD
       # Parses code block's HTML attributes in order to detect the programming
       # language of what's enclosed in that code block.
       #
-      # @param [String, nil] pre_html_attrs HTML attribute list of +pre+ element
-      # @param [String, nil] code_html_attrs HTML attribute list of +code+
       #   element
-      # @return [String, nil] detected programming language
+      # @rbs pre_html_attrs: String | nil -- HTML attribute list of +pre+ element
+      # @rbs code_html_attrs: String | nil -- HTML attribute list of +code+
+      # @rbs return: String | nil -- detected programming language
       def detect_lang_in_codeblock_attributes(pre_html_attrs, code_html_attrs)
         detected = nil
         detected ||= (/\bdata-lang="(.+?)"/ =~ code_html_attrs && $1)

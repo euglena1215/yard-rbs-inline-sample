@@ -76,8 +76,8 @@ module YARD
 
     # Creates a new parser to parse docstring data
     #
-    # @param [Tags::Library] library a tag library for recognizing
     #   tags.
+    # @rbs library: Tags::Library -- a tag library for recognizing
     def initialize(library = Tags::Library.instance)
       @text = ""
       @raw_text = ""
@@ -90,8 +90,8 @@ module YARD
       @state = OpenStruct.new
     end
 
-    # @return [Docstring] translates parsed text into
     #   a Docstring object.
+    # @rbs return: Docstring -- translates parsed text into
     def to_docstring
       Docstring.new!(text, tags, object, raw_text, reference)
     end
@@ -192,7 +192,7 @@ module YARD
     # This is called implicitly by parser. Use this when
     # manually configuring a {Docstring} object.
     #
-    # @return [void]
+    # @rbs return: void
     def post_process
       call_after_parse_callbacks
     end
@@ -203,9 +203,9 @@ module YARD
     #
     # To add an already created tag object, append it to {#tags}.
     #
-    # @param [String] tag_name the tag name
-    # @param [String] tag_buf the text attached to the tag with newlines removed.
-    # @return [Tags::Tag, Tags::RefTag] a tag
+    # @rbs tag_name: String -- the tag name
+    # @rbs tag_buf: String -- the text attached to the tag with newlines removed.
+    # @rbs return: Tags::Tag | Tags::RefTag -- a tag
     def create_tag(tag_name, tag_buf = '')
       if tag_buf =~ /\A\s*(?:(\S+)\s+)?\(\s*see\s+(\S+)\s*\)\s*\Z/
         return create_ref_tag(tag_name, $1, $2)
@@ -228,7 +228,7 @@ module YARD
     end
 
     # Creates a new directive using the registered {#library}
-    # @return [Tags::Directive] the directive object that is created
+    # @rbs return: Tags::Directive -- the directive object that is created
     def create_directive(tag_name, tag_buf)
       if library.has_directive?(tag_name)
         dir = library.directive_create(tag_name, tag_buf, self)
@@ -267,7 +267,7 @@ module YARD
       after_parse_callbacks << block
     end
 
-    # @return [Array<Proc>] the {after_parse} callback proc objects
+    # @rbs return: Array[Proc] -- the {after_parse} callback proc objects
     def self.after_parse_callbacks
       @after_parse_callbacks ||= []
     end

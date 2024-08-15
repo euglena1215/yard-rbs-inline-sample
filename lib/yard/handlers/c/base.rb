@@ -6,7 +6,7 @@ module YARD
         include YARD::Parser::C
         include HandlerMethods
 
-        # @return [Boolean] whether the handler handles this statement
+        # @rbs return: bool -- whether the handler handles this statement
         def self.handles?(statement, processor)
           processor.globals.cruby_processed_files ||= {}
           processor.globals.cruby_processed_files[processor.file] = true

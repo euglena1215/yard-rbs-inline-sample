@@ -9,7 +9,7 @@ module YARD
     class ProcessSerializer < Base
       # Creates a new ProcessSerializer for the shell command +cmd+
       #
-      # @param [String] cmd the command that will accept data on stdin
+      # @rbs cmd: String -- the command that will accept data on stdin
       def initialize(cmd)
         @cmd = cmd
       end

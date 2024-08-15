@@ -4,7 +4,7 @@ class String
   # text as a single token. Use '\"' and "\'" to escape quotes and
   # '\\' to escape a backslash.
   #
-  # @return [Array] an array representing the tokens
+  # @rbs return: Array[untyped] -- an array representing the tokens
   def shell_split
     out = [String.new("")]
     state = :none

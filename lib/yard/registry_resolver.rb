@@ -11,8 +11,8 @@ module YARD
 
     # Creates a new resolver object for a registry.
     #
-    # @param registry [Registry] only set this if customizing the registry
     #   object
+    # @rbs registry: Registry -- only set this if customizing the registry
     def initialize(registry = Registry)
       @registry = registry
       @default_sep = nil
@@ -190,19 +190,19 @@ module YARD
       nss
     end
 
-    # @return [Regexp] the regexp match of the default separator
+    # @rbs return: Regexp -- the regexp match of the default separator
     def starts_with_default_separator_match
       @@starts_with_default_separator_match ||= /\A#{default_separator}/
     end
 
-    # @return [Regexp] the regexp that matches strings starting with
     #   a separator
+    # @rbs return: Regexp -- the regexp that matches strings starting with
     def starts_with_separator_match
       @@starts_with_separator_match ||= /\A(#{separators_match})/
     end
 
-    # @return [Regexp] the regexp that can be used to split a string on all
     #   occurrences of separator tokens
+    # @rbs return: Regexp -- the regexp that can be used to split a string on all
     def split_on_separators_match
       @@split_on_separators_match ||= /(.+?)(#{separators_match}|$)/
     end
